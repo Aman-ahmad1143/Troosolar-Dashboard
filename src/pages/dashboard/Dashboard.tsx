@@ -1,8 +1,6 @@
 import React from "react";
 
-
-// My name is Muhammad Umair 
-
+//My name is Aman Ijaz
 
 import { chartData, stats, latestOrders, latestUsers } from "../../constants/dashboard";
 import DashboardStats from "./DashboardStats";
