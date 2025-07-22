@@ -20,7 +20,7 @@ const OrderDetailModal = ({ isOpen, order, onClose }: OrderDetailModalProps) => 
           <h2 className="text-lg font-semibold text-gray-900">Order Details</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:text-gray-700 hover:bg-gray-200"
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:text-gray-700 hover:bg-gray-200 cursor-pointer"
           >
             ×
           </button>
