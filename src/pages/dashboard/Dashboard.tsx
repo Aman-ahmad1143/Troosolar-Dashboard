@@ -1,13 +1,17 @@
 import React from "react";
 
+// My name is Muhammad Umair
 
-// My name is Muhammad Umair 
-
-
-import { chartData, stats, latestOrders, latestUsers } from "../../constants/dashboard";
+import {
+  chartData,
+  stats,
+  latestOrders,
+  latestUsers,
+} from "../../constants/dashboard";
 import DashboardStats from "./DashboardStats";
 import DashboardOrders from "./DashboardOrders";
 import DashboardLatestUsers from "./DashboardLatestUsers";
+import Header from "../../component/Header";
 
 import { Bar } from "react-chartjs-2";
 import {
@@ -19,9 +23,7 @@ import {
   Tooltip,
 } from "chart.js";
 
-
 ChartJS.register(BarElement, CategoryScale, LinearScale, Legend, Tooltip);
-
 
 const chartOptions = {
   responsive: true,
@@ -29,8 +31,8 @@ const chartOptions = {
   plugins: {
     legend: {
       display: true,
-      position: 'bottom' as const,
-      align: 'start' as const,
+      position: "bottom" as const,
+      align: "start" as const,
       labels: {
         boxWidth: 12,
         boxHeight: 12,
@@ -71,9 +73,9 @@ const chartOptions = {
           size: 12,
         },
         stepSize: 500,
-        callback: function(value: any) {
-          return value === 0 ? '0' : value;
-        }
+        callback: function (value: any) {
+          return value === 0 ? "0" : value;
+        },
       },
     },
   },
@@ -83,21 +85,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Header at the very top */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex justify-end items-center">
-          <div className="flex items-center space-x-4">
-            <button className="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
-              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5-5V7a5 5 0 00-10 0v5l-5 5h5a5 5 0 0010 0z" />
-              </svg>
-            </button>
-            <div className="flex items-center space-x-3">
-              <img src="/assets/layout/admin.png" alt="Admin" className="w-8 h-8 rounded-full" />
-              <span className="font-medium text-gray-700">Hi, Admin</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Header />
 
       {/* Main Dashboard Content */}
       <div className="p-6 space-y-6">
@@ -109,17 +97,22 @@ const Dashboard: React.FC = () => {
         {/* Chart & Orders */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Bar Chart */}
-          <div className="bg-white shadow-md rounded-lg p-4 lg:col-span-7" style={{height: 420}}>
+          <div
+            className="bg-white shadow-md rounded-lg p-4 lg:col-span-7"
+            style={{ height: 420 }}
+          >
             {chartData && chartData.labels && chartData.datasets ? (
-              <div style={{height: "380px"}}>
+              <div style={{ height: "380px" }}>
                 <Bar data={chartData} options={chartOptions} />
               </div>
             ) : (
-              <div className="text-center text-gray-400">Chart data not available</div>
+              <div className="text-center text-gray-400">
+                Chart data not available
+              </div>
             )}
           </div>
           {/* Latest Orders */}
-          <div className="lg:col-span-5" style={{height: 480}}>
+          <div className="lg:col-span-5" style={{ height: 480 }}>
             <DashboardOrders orders={latestOrders} />
           </div>
         </div>
@@ -130,6 +123,5 @@ const Dashboard: React.FC = () => {
     </div>
   );
 };
-
 
 export default Dashboard;

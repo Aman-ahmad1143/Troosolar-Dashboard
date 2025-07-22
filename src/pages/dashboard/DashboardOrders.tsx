@@ -6,12 +6,17 @@ interface DashboardOrdersProps {
 }
 
 const DashboardOrders: React.FC<DashboardOrdersProps> = ({ orders }) => (
-  <div className="bg-white rounded-lg p-4" style={{height: 420, overflow: 'hidden'}}>
+  <div
+    className="bg-white rounded-lg p-4"
+    style={{ height: 420, overflow: "hidden" }}
+  >
     <div className="flex justify-between items-center mb-4">
       <h2 className="text-lg font-semibold text-gray-900">Latest Orders</h2>
-      <button className="text-blue-600 text-sm hover:underline">View All</button>
+      <button className="text-blue-600 text-sm hover:underline">
+        View All
+      </button>
     </div>
-    <div className="space-y-3" style={{height: "350px", overflow: "hidden"}}>
+    <div className="space-y-3" style={{ height: "350px", overflow: "hidden" }}>
       {orders.slice(0, 3).map((_, index) => (
         <div
           key={index}
@@ -29,16 +34,21 @@ const DashboardOrders: React.FC<DashboardOrdersProps> = ({ orders }) => (
               />
             </div>
             <div>
-              <p className="font-medium text-gray-900 text-sm">Newman AGM Solar Inverter</p>
-              <p className="text-blue-900 font-semibold text-base">₦4,500,000</p>
+              <p className="font-medium text-gray-900 text-sm">
+                Newman AGM Solar Inverter
+              </p>
+              <p className="text-blue-900 font-semibold text-base">
+                ₦4,500,000
+              </p>
               <p className="text-xs text-gray-500">
-                Placed by <span className="text-blue-600 underline">Adewale</span>
+                Placed by{" "}
+                <span className="text-blue-600 underline">Adewale</span>
               </p>
             </div>
           </div>
-          <button 
-            className="text-white text-sm px-6 py-2 rounded-full hover:opacity-90 transition font-medium shadow-sm"
-            style={{ backgroundColor: '#273E8E' }}
+          <button
+            className="text-white text-sm px-6 cursor-pointer py-2 rounded-full hover:opacity-90 transition font-medium shadow-sm"
+            style={{ backgroundColor: "#273E8E" }}
           >
             View More
           </button>

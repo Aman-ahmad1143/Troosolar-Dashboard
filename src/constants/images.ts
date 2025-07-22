@@ -15,6 +15,8 @@ const images = {
   analytics: "/assets/sidebar/Analytics.svg",
   settings: "/assets/sidebar/setting.svg",
   logout : "/assets/sidebar/SignOut.svg",
+  bell : "/assets/images/bell.svg",
+  dots : "/assets/images/3dots.svg",
 };
 
 export default images;
