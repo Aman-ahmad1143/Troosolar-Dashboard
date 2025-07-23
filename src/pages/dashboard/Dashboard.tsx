@@ -80,7 +80,7 @@ const chartOptions = {
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-[#F5F7FF] min-h-screen">
       {/* Header at the very top */}
       <Header />
 

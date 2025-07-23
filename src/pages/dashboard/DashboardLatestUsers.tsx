@@ -18,7 +18,7 @@ const DashboardLatestUsers: React.FC<DashboardLatestUsersProps> = ({
         <thead>
           <tr className="bg-[#EBEBEB] border border-gray-200">
             <th className="px-6 py-4 text-black font-medium">
-              <input type="checkbox" className="rounded" />
+              <input type="checkbox" className="rounded cursor-pointer" />
             </th>
             <th className="px-6 py-4 text-black font-medium">Name</th>
             <th className="px-6 py-4 text-black font-medium">Email</th>
@@ -43,7 +43,7 @@ const DashboardLatestUsers: React.FC<DashboardLatestUsersProps> = ({
               } hover:bg-gray-50`}
             >
               <td className="px-6 py-4 whitespace-nowrap">
-                <input type="checkbox" className="rounded" />
+                <input type="checkbox" className="rounded cursor-pointer" />
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-medium">
                 {user.name}

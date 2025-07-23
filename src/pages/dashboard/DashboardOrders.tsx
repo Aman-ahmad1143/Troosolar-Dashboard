@@ -7,16 +7,16 @@ interface DashboardOrdersProps {
 
 const DashboardOrders: React.FC<DashboardOrdersProps> = ({ orders }) => (
   <div
-    className="bg-white rounded-lg p-4"
+    className="bg-white rounded-lg "
     style={{ height: 420, overflow: "hidden" }}
   >
-    <div className="flex justify-between items-center mb-4">
+    <div className="flex justify-between items-center p-4 bg-[#EBEBEB]">
       <h2 className="text-lg font-semibold text-gray-900">Latest Orders</h2>
-      <button className="text-blue-600 text-sm hover:underline">
+      <button className="text-blue-600 text-sm hover:underline cursor-pointer">
         View All
       </button>
     </div>
-    <div className="space-y-3" style={{ height: "350px", overflow: "hidden" }}>
+    <div className="space-y-3 p-4" style={{ height: "350px", overflow: "hidden" }}>
       {orders.slice(0, 3).map((_, index) => (
         <div
           key={index}
