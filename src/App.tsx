@@ -14,7 +14,7 @@ import Transactions from "./pages/transactions/Transactions";
 import Balances from "./pages/balances/Balances";
 import Shop_mgt from "./pages/shop_mgt/Shop_mgt";
 import Referral_mgt from "./pages/referral_mgt/Referral_mgt";
-import Analytics from "./pages/analytics/Analytics";
+import Analytics from "./pages/analytics/Analytics.tsx";
 import Settings from "./pages/settings/Settings";
 
 

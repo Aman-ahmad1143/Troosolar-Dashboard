@@ -4,6 +4,7 @@ import { shopOrderData, getOrderStatusColor } from './shpmgt';
 import type { ShopOrderData } from './shpmgt';
 import OrderDetailModal from './OrderDetailModal';
 import Product from './Product';
+import ProductBuilder from './ProductBuilder';
 
 const Shop_mgt = () => {
   const [activeTab, setActiveTab] = useState("Shop Orders");
@@ -12,6 +13,7 @@ const Shop_mgt = () => {
   const [statusFilter, setStatusFilter] = useState("Status");
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<ShopOrderData | null>(null);
+  const [isProductBuilderOpen, setIsProductBuilderOpen] = useState(false);
 
   const handleNotificationClick = () => {
     console.log("Notification clicked");
@@ -55,12 +57,8 @@ const Shop_mgt = () => {
       {/* Header Component */}
       <Header 
         adminName="Hi, Admin"
-        adminRole="Administrator"
         adminImage="/assets/layout/admin.png"
-        showNotification={true}
-        notificationCount={0}
         onNotificationClick={handleNotificationClick}
-        showAdminRole={false}
       />
 
       {/* Main Content */}
@@ -103,7 +101,10 @@ const Shop_mgt = () => {
                   <button className="bg-[#273E8E] hover:bg-[#1e3270] text-white px-8 py-3 rounded-full text-sm font-medium transition-colors shadow-sm">
                     Upload Product
                   </button>
-                  <button className="bg-[#E8A91D] hover:bg-orange-600 text-white px-8 py-3 rounded-full text-sm font-medium transition-colors shadow-sm">
+                  <button 
+                    onClick={() => setIsProductBuilderOpen(true)}
+                    className="bg-[#E8A91D] hover:bg-orange-600 text-white px-8 py-3 rounded-full text-sm font-medium transition-colors shadow-sm"
+                  >
                     Create Bundle
                   </button>
                 </div>
@@ -327,6 +328,12 @@ const Shop_mgt = () => {
         isOpen={showOrderModal}
         order={selectedOrder}
         onClose={closeModal}
+      />
+
+      {/* Product Builder Modal */}
+      <ProductBuilder
+        isOpen={isProductBuilderOpen}
+        onClose={() => setIsProductBuilderOpen(false)}
       />
     </div>
   );
