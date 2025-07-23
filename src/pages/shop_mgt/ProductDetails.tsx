@@ -8,7 +8,6 @@ interface ProductDetailsProps {
 }
 
 const ProductDetails = ({ isOpen, onClose, product }: ProductDetailsProps) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('details');
 
   if (!isOpen || !product) return null;
@@ -20,20 +19,8 @@ const ProductDetails = ({ isOpen, onClose, product }: ProductDetailsProps) => {
     "/assets/images/newmanbadge.png"
   ];
 
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === 0 ? productImages.length - 1 : prev - 1
-    );
-  };
-
-  const handleNextImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === productImages.length - 1 ? 0 : prev + 1
-    );
-  };
-
   return (
-    <div className="fixed inset-0 bg-blur bg-opacity-50 flex items-end justify-end z-50 p-4">
+    <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex items-end justify-end z-50 p-4">
       <div className="bg-white rounded-2xl max-w-sm w-full max-h-[95vh] overflow-y-auto shadow-xl">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
@@ -54,7 +41,7 @@ const ProductDetails = ({ isOpen, onClose, product }: ProductDetailsProps) => {
           <div className="mb-4">
             <div className="relative bg-gray-50 rounded-lg overflow-hidden border border-gray-200" style={{height: '250px'}}>
               <img
-                src={productImages[currentImageIndex]}
+                src={productImages[0]}
                 alt={product.name}
                 className="w-full h-full object-contain p-4"
                 onError={(e) => {
@@ -65,7 +52,7 @@ const ProductDetails = ({ isOpen, onClose, product }: ProductDetailsProps) => {
               
               {/* Image Counter */}
               <div className="absolute bottom-3 right-3 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs font-medium">
-                {currentImageIndex + 1}/{productImages.length}
+                1/{productImages.length}
               </div>
             </div>
           </div>
@@ -103,10 +90,10 @@ const ProductDetails = ({ isOpen, onClose, product }: ProductDetailsProps) => {
 
           {/* Action Buttons */}
           <div className="flex gap-3 mb-4">
-            <button className="flex-1 bg-gray-100 text-gray-700 py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
+            <button className="flex-1 bg-gray-100 text-gray-700 py-2.5 px-4 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors">
               Edit Product
             </button>
-            <button className="flex-1 bg-red-500 text-white py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-red-600 transition-colors">
+            <button className="flex-1 bg-red-600 text-white py-2.5 px-4 rounded-full text-sm font-medium hover:bg-red-600 transition-colors">
               Delete Product
             </button>
           </div>
@@ -184,10 +171,117 @@ const ProductDetails = ({ isOpen, onClose, product }: ProductDetailsProps) => {
           )}
 
           {activeTab === 'reviews' && (
-            <div className="space-y-3">
-              <h4 className="font-semibold text-gray-900 text-sm mb-3">Customer Reviews</h4>
-              <div className="text-gray-600 text-sm">
-                <p>No reviews available yet. Be the first to review this product!</p>
+            <div className="space-y-4">
+              <h4 className="font-semibold text-gray-900 text-sm mb-4">Reviews</h4>
+              
+              {/* Review Summary */}
+              <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex">
+                      {[1, 2, 3, 4].map((star) => (
+                        <svg key={star} className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                      <svg className="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    </div>
+                    <span className="font-semibold text-gray-900">4.8</span>
+                  </div>
+                  <span className="text-sm text-gray-600">32 Reviews</span>
+                </div>
+              </div>
+
+              {/* Individual Reviews */}
+              <div className="space-y-4">
+                {/* Review 1 */}
+                <div className="border-b border-gray-200 pb-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                        <span className="text-gray-600 font-medium text-sm">AD</span>
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-gray-900 text-sm">Adewale</h5>
+                        <div className="flex items-center gap-1 mt-1">
+                          {[1, 2, 3, 4].map((star) => (
+                            <svg key={star} className="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          ))}
+                          <svg className="w-3 h-3 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-400">03-04-25</span>
+                      <button className="text-red-500 text-xs hover:text-red-700">Delete</button>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-700 ml-13">The product is very good and i enjoyed using it</p>
+                </div>
+
+                {/* Review 2 */}
+                <div className="border-b border-gray-200 pb-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                        <span className="text-gray-600 font-medium text-sm">AD</span>
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-gray-900 text-sm">Adewale</h5>
+                        <div className="flex items-center gap-1 mt-1">
+                          {[1, 2, 3, 4].map((star) => (
+                            <svg key={star} className="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          ))}
+                          <svg className="w-3 h-3 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-400">03-04-25</span>
+                      <button className="text-red-500 text-xs hover:text-red-700">Delete</button>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-700 ml-13">The product is very good and i enjoyed using it</p>
+                </div>
+
+                {/* Review 3 */}
+                <div className="pb-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                        <span className="text-gray-600 font-medium text-sm">AD</span>
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-gray-900 text-sm">Adewale</h5>
+                        <div className="flex items-center gap-1 mt-1">
+                          {[1, 2, 3, 4].map((star) => (
+                            <svg key={star} className="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          ))}
+                          <svg className="w-3 h-3 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-400">03-04-25</span>
+                      <button className="text-red-500 text-xs hover:text-red-700">Delete</button>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-700 ml-13">The product is very good and i enjoyed using it</p>
+                </div>
               </div>
             </div>
           )}
