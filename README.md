@@ -1,5 +1,8 @@
 # React + TypeScript + Vite
 
+# Figma File link
+https://www.figma.com/design/KxcxSWYQkX3bu84YEc6xMp/Troosolar-Admin?node-id=0-1&t=d1SeIymDvuVpCZIk-1
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
@@ -67,6 +70,3 @@ export default tseslint.config([
   },
 ])
 ```
-# Aman Ijaz
-
-# My name is Aman Ijaz

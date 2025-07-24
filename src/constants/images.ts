@@ -17,6 +17,7 @@ const images = {
   logout : "/assets/sidebar/SignOut.svg",
   bell : "/assets/images/bell.svg",
   dots : "/assets/images/3dots.svg",
+  cross : "/assets/images/cross.svg",
 };
 
 export default images;
