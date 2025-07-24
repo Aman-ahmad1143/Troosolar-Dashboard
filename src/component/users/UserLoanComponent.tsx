@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../Header";
 import type { User } from "../../constants/usermgt";
 import type { LoanDetail } from "./UserLoanData";
+import images from "../../constants/images";
 
 type UserLoanComponentProps = {
   user: User;
@@ -128,24 +129,27 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
   }: {
     status: "Pending" | "Completed" | "Rejected";
   }) => {
-    let style = { backgroundColor: "#FFA50033", color: "#FF8C00" }; // Default to pending
-    let dotColor = "#FF8C00";
+    let style = { backgroundColor: "#FEF3C7", color: "#D97706" }; // Pending - light orange background with darker orange text
+    let dotColor = "#D97706";
+    let borderClass = "border-[#FFA500] border";
 
     if (status === "Completed") {
-      style = { backgroundColor: "#00800033", color: "#008000" };
-      dotColor = "#008000";
+      style = { backgroundColor: "#D1FAE5", color: "#065F46" }; // Completed - light green background with dark green text
+      dotColor = "#10B981";
+      borderClass = "border-[#008000] border";
     } else if (status === "Rejected") {
-      style = { backgroundColor: "#FF000033", color: "#FF0000" };
-      dotColor = "#FF0000";
+      style = { backgroundColor: "#FEE2E2", color: "#DC2626" }; // Rejected - light red background with red text
+      dotColor = "#DC2626";
+      borderClass = "border-[#FF0000] border";
     }
 
     return (
       <span
-        className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full min-w-[75px]"
+        className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full min-w-[90px] justify-center ${borderClass}`}
         style={style}
       >
         <span
-          className="w-1.5 h-1.5 rounded-full mr-1.5"
+          className="w-2 h-2 rounded-full mr-2"
           style={{ backgroundColor: dotColor }}
         ></span>
         {status}
@@ -154,7 +158,7 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
   };
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen">
+    <div className="bg-[#F5F7FF] min-h-screen">
       {/* KYC Profile Modal */}
       {showKycModal && (
         <div className="fixed inset-0 z-50 flex justify-end items-end">
@@ -795,10 +799,11 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
             <div className="flex justify-between items-center px-5 pt-4 pb-2">
               <h2 className="text-xl font-semibold">Full Loan Details</h2>
               <button
-                className="text-gray-600 hover:text-gray-900 p-1"
+                className="cursor-pointer p-1"
                 onClick={() => setShowLoanModal(false)}
               >
-                <svg
+                <img src={images.cross} alt="" />
+                {/* <svg
                   className="w-6 h-6"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -810,7 +815,7 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
                     strokeWidth={2}
                     d="M6 18L18 6M6 6l12 12"
                   />
-                </svg>
+                </svg> */}
               </button>
             </div>
 
@@ -819,7 +824,7 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
               <button
                 className={`py-2 px-0 mr-6 ${
                   activeTab === "loan"
-                    ? "border-b-2 border-blue-600 font-medium text-blue-900"
+                    ? "border-b-2 border-blue-600 font-medium text-blue-900 cursor-pointer"
                     : "text-gray-500"
                 }`}
                 onClick={() => setActiveTab("loan")}
@@ -829,7 +834,7 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
               <button
                 className={`py-2 px-0 ${
                   activeTab === "financial"
-                    ? "border-b-2 border-blue-600 font-medium text-blue-900"
+                    ? "border-b-2 border-blue-600 font-medium text-blue-900 cursor-pointer"
                     : "text-gray-500"
                 }`}
                 onClick={() => setActiveTab("financial")}
@@ -941,7 +946,7 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
                   </div>
                 </div>
 
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-medium my-5">
+                <button className="w-full bg-[#273E8E] hover:bg-[#272E8E] text-white py-3 rounded-full font-medium my-5 cursor-pointer">
                   Disburse Loan
                 </button>
               </div>
@@ -1057,22 +1062,23 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
         {/* Tabs */}
         <div className="flex gap-8 border-b border-gray-200 mb-6">
           <button
-            className="pb-2 text-gray-500"
+            className="pb-2 cursor-pointer text-[#00000080]"
             onClick={() => navigate(`/user-activity/${user.id}`)}
           >
             Activity
           </button>
-          <button className="pb-2 border-b-2 border-blue-900 text-blue-900 font-semibold">
+          <button className="pb-2 cursor-pointer text-black font-semibold relative">
             Loans
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#273E8E] rounded-full"></div>
           </button>
           <button
-            className="pb-2 text-gray-500"
+            className="pb-2 cursor-pointer text-[#00000080]"
             onClick={() => navigate(`/user-activity/${user.id}/transactions`)}
           >
             Transactions
           </button>
           <button
-            className="pb-2 text-gray-500"
+            className="pb-2 cursor-pointer text-[#00000080]"
             onClick={() => navigate(`/user-activity/${user.id}/orders`)}
           >
             Orders
@@ -1181,23 +1187,29 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
           {/* Wallets */}
           <div className="flex flex-col gap-6 flex-1 min-w-[250px]">
             <div className="flex gap-6">
-              <div className="bg-[#2946A9] text-white rounded-2xl shadow-lg flex-1 p-6 flex flex-col justify-between min-w-[200px]">
-                <div className="text-lg font-semibold mb-2">Loan Wallet</div>
-                <div className="text-3xl font-bold mb-6">N200,000</div>
+              <div className="bg-[#273E8E] text-white rounded-2xl shadow-lg flex-1 p-6 flex flex-col justify-between min-w-[200px]">
+                <div className="text-[12px] font-semibold text-[#FFFFFFB2] mb-8">
+                  Loan Wallet
+                </div>
+                <div className="text-3xl font-bold mb-6">NO</div>
 
-                <div className="bg-[#2946A9]/30 rounded-xl p-4">
-                  <div className="text-sm text-gray-200">Loan Eligible for</div>
+                <div className="bg-[#1D3073] border border-[#4361C9] rounded-xl p-4">
+                  <div className="text-[8px] text-[#FFFFFF80]">
+                    Loan Eligible for
+                  </div>
                   <div className="text-xl font-semibold mt-1">
                     N500,000
                     <span className="text-lg font-normal">/12months</span>
                   </div>
                 </div>
               </div>
-              <div className="bg-[#2946A9] text-white rounded-2xl shadow-lg flex-1 p-6 flex flex-col justify-between min-w-[200px]">
-                <div className="text-lg font-semibold mb-2">General Wallet</div>
+              <div className="bg-[#273E8E] text-white rounded-2xl shadow-lg flex-1 p-6 flex flex-col justify-between min-w-[200px]">
+                <div className="text-[12px] font-semibold text-[#FFFFFFB2]">
+                  General Wallet
+                </div>
                 <div className="text-3xl font-bold mb-2">N200,000</div>
                 <button
-                  className="bg-white text-[#2946A9] rounded-full px-6 py-2 font-semibold mt-2"
+                  className="bg-white text-[#000000] cursor-pointer text-sm rounded-full px-8 py-4 font-semibold mt-2"
                   onClick={() => setShowKycModal(true)}
                 >
                   KYC Profile
@@ -1255,11 +1267,13 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
         {/* Loans Summary Table */}
         <div className="mb-4">
           <div className="mb-2">
-            <h2 className="text-xl font-semibold">Loans Summary</h2>
+            <h2 className="text-xl text-[#000000] font-bold mb-5">
+              Loans Summary
+            </h2>
           </div>
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-5">
             <div className="relative inline-block">
-              <button className="border rounded px-3 py-2 text-sm flex items-center gap-1">
+              <button className="bg-white border border-[#00000080] rounded-lg px-3 py-2 text-sm flex items-center gap-5 cursor-pointer">
                 More Actions
                 <svg
                   width="12"
@@ -1282,7 +1296,7 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
               {/* Send Status Dropdown */}
               <div ref={sendDropdownRef}>
                 <button
-                  className="border rounded px-3 py-2 text-sm flex items-center gap-1"
+                  className="bg-white border border-[#00000080] rounded-lg px-3 py-2 text-sm flex items-center gap-5 cursor-pointer"
                   onClick={() => {
                     setShowSendDropdown(!showSendDropdown);
                     setShowApprovalDropdown(false);
@@ -1307,11 +1321,11 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
                 </button>
                 {showSendDropdown && (
                   <div className="absolute left-0 mt-1 w-36 bg-white border border-gray-200 rounded-md shadow-lg z-10">
-                    <div className="py-1">
-                      <button className="w-full px-4 py-2 text-sm text-left hover:bg-gray-100">
+                    <div className="py-1 p-5">
+                      <button className="w-full px-4 py-2 text-sm text-left cursor-pointer">
                         Pending
                       </button>
-                      <button className="w-full px-4 py-2 text-sm text-left hover:bg-gray-100">
+                      <button className="w-full px-4 py-2 text-sm text-left cursor-pointer">
                         Completed
                       </button>
                     </div>
@@ -1323,7 +1337,7 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
               {/* Approval Status Dropdown */}
               <div ref={approvalDropdownRef}>
                 <button
-                  className="border rounded px-3 py-2 text-sm flex items-center gap-1"
+                  className="bg-white border border-[#00000080] rounded-lg px-3 py-2 text-sm flex items-center gap-5 cursor-pointer"
                   onClick={() => {
                     setShowApprovalDropdown(!showApprovalDropdown);
                     setShowSendDropdown(false);
@@ -1348,14 +1362,14 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
                 </button>
                 {showApprovalDropdown && (
                   <div className="absolute left-0 mt-1 w-36 bg-white border border-gray-200 rounded-md shadow-lg z-10">
-                    <div className="py-1">
-                      <button className="w-full px-4 py-2 text-sm text-left hover:bg-gray-100">
+                    <div className="py-1 p-5">
+                      <button className="w-full px-4 py-2 text-sm text-left cursor-pointer">
                         Pending
                       </button>
-                      <button className="w-full px-4 py-2 text-sm text-left hover:bg-gray-100">
+                      <button className="w-full px-4 py-2 text-sm text-left cursor-pointer">
                         Completed
                       </button>
-                      <button className="w-full px-4 py-2 text-sm text-left hover:bg-gray-100">
+                      <button className="w-full px-4 py-2 text-sm text-left cursor-pointer">
                         Rejected
                       </button>
                     </div>
@@ -1367,36 +1381,41 @@ const UserLoanComponent: React.FC<UserLoanComponentProps> = ({
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <table className="min-w-full text-sm">
               <thead>
-                <tr className="bg-[#F8FAFC] text-gray-600">
-                  <th className="p-4 w-12">
-                    <input type="checkbox" />
+                <tr className="bg-[#EBEBEB] text-black">
+                  <th className="p-4 w-12 text-center">
+                    <input className="cursor-pointer" type="checkbox" />
                   </th>
-                  <th className="p-4 text-left">Name</th>
-                  <th className="p-4 text-left">Amount</th>
-                  <th className="p-4 text-left">Date</th>
-                  <th className="p-4 text-left">Send Status</th>
-                  <th className="p-4 text-left">Approval</th>
-                  <th className="p-4 text-left">Action</th>
+                  <th className="p-4 text-center">Name</th>
+                  <th className="p-4 text-center">Amount</th>
+                  <th className="p-4 text-center">Date</th>
+                  <th className="p-4 text-center">Send Status</th>
+                  <th className="p-4 text-center">Approval</th>
+                  <th className="p-4 text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {userLoans.map((loan) => (
-                  <tr key={loan.id} className="hover:bg-gray-50">
-                    <td className="p-4">
-                      <input type="checkbox" />
+                {userLoans.map((loan, idx) => (
+                  <tr
+                    key={loan.id}
+                    className={`${
+                      idx % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
+                    } hover:bg-gray-50`}
+                  >
+                    <td className="p-4 text-center">
+                      <input className="cursor-pointer" type="checkbox" />
                     </td>
-                    <td className="p-4">{loan.name}</td>
-                    <td className="p-4">₦{loan.loanAmount}</td>
-                    <td className="p-4">05-07-25/07:22AM</td>
-                    <td className="p-4">
+                    <td className="p-4 text-center">{loan.name}</td>
+                    <td className="p-4 text-center">₦{loan.loanAmount}</td>
+                    <td className="p-4 text-center">05-07-25/07:22AM</td>
+                    <td className="p-4 text-center">
                       <StatusBadge status={loan.sendStatus} />
                     </td>
-                    <td className="p-4">
+                    <td className="p-4 text-center">
                       <StatusBadge status={loan.approvalStatus} />
                     </td>
-                    <td className="p-4">
+                    <td className="p-4 text-center">
                       <button
-                        className="bg-[#2946A9] text-white px-4 py-2 rounded-full text-sm"
+                        className="bg-[#273E8E] text-white px-4 py-3 rounded-full text-sm cursor-pointer"
                         onClick={() => viewLoanDetails(loan.id)}
                       >
                         View Details

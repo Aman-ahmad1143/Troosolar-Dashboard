@@ -17,17 +17,27 @@ const DashboardLatestUsers: React.FC<DashboardLatestUsersProps> = ({
       <table className="w-full text-left text-sm">
         <thead>
           <tr className="bg-[#EBEBEB] border border-gray-200">
-            <th className="px-6 py-4 text-black font-medium">
+            <th className="px-6 py-4 text-black font-medium flex justify-center items-center">
               <input type="checkbox" className="rounded cursor-pointer" />
             </th>
-            <th className="px-6 py-4 text-black font-medium">Name</th>
-            <th className="px-6 py-4 text-black font-medium">Email</th>
-            <th className="px-6 py-4 text-black font-medium">Phone</th>
-            <th className="px-6 py-4 text-black font-medium">BVN</th>
-            <th className="px-6 py-4 text-black font-medium">
+            <th className="px-6 py-4 text-black font-medium text-center">
+              Name
+            </th>
+            <th className="px-6 py-4 text-black font-medium text-center">
+              Email
+            </th>
+            <th className="px-6 py-4 text-black font-medium text-center">
+              Phone
+            </th>
+            <th className="px-6 py-4 text-black font-medium text-center">
+              BVN
+            </th>
+            <th className="px-6 py-4 text-black font-medium text-center">
               Date Registered
             </th>
-            <th className="px-6 py-4 text-black font-medium">Actions</th>
+            <th className="px-6 py-4 text-black font-medium text-center">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white">
@@ -42,26 +52,26 @@ const DashboardLatestUsers: React.FC<DashboardLatestUsersProps> = ({
                 idx % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
               } hover:bg-gray-50`}
             >
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 whitespace-nowrap flex justify-center items-center">
                 <input type="checkbox" className="rounded cursor-pointer" />
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-medium">
+              <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-medium text-center">
                 {user.name}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-black">
+              <td className="px-6 py-4 whitespace-nowrap text-black text-center">
                 {user.email}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-black">
+              <td className="px-6 py-4 whitespace-nowrap text-black text-center">
                 {user.phone}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-black">
+              <td className="px-6 py-4 whitespace-nowrap text-black text-center">
                 {user.bvn}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-black">
+              <td className="px-6 py-4 whitespace-nowrap text-black text-center">
                 {user.date}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center justify-end gap-4">
                   <button
                     className="text-white px-4 py-2 rounded-full cursor-pointer text-sm font-medium transition hover:opacity-90"
                     style={{ backgroundColor: "#273E8E" }}
