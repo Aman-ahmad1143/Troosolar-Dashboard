@@ -82,7 +82,7 @@ const AddCustomService = ({ isOpen, onClose }: AddCustomServiceProps) => {
           <div className="mt-6">
             <button 
               onClick={handleSave}
-              className="w-full py-3 px-4 bg-blue-900 hover:bg-blue-900 text-white font-medium rounded-lg transition-colors"
+              className="w-full py-3 px-4 bg-blue-900 hover:bg-blue-900 text-white font-medium rounded-full transition-colors"
             >
               Save
             </button>

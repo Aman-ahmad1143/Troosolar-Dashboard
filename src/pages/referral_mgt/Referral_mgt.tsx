@@ -78,7 +78,7 @@ const Referral_mgt = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F5F7FF]">
       <Header />
       
       <div className="p-6">
