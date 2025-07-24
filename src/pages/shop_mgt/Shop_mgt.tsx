@@ -5,6 +5,7 @@ import type { ShopOrderData } from './shpmgt';
 import OrderDetailModal from './OrderDetailModal';
 import Product from './Product';
 import ProductBuilder from './ProductBuilder';
+import AddProduct from './AddProduct';
 
 const Shop_mgt = () => {
   const [activeTab, setActiveTab] = useState("Shop Orders");
@@ -14,6 +15,7 @@ const Shop_mgt = () => {
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<ShopOrderData | null>(null);
   const [isProductBuilderOpen, setIsProductBuilderOpen] = useState(false);
+  const [isAddProductOpen, setIsAddProductOpen] = useState(false);
 
   const handleNotificationClick = () => {
     console.log("Notification clicked");
@@ -53,7 +55,7 @@ const Shop_mgt = () => {
   });
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen">
+    <div className="bg-[#F5F7FF] min-h-screen">
       {/* Header Component */}
       <Header 
         adminName="Hi, Admin"
@@ -98,7 +100,10 @@ const Shop_mgt = () => {
               {/* Action Buttons - Only show on Products tab */}
               {activeTab === "Products" && (
                 <div className="flex items-center space-x-3 mb-2">
-                  <button className="bg-[#273E8E] hover:bg-[#1e3270] text-white px-8 py-3 rounded-full text-sm font-medium transition-colors shadow-sm">
+                  <button 
+                    onClick={() => setIsAddProductOpen(true)}
+                    className="bg-[#273E8E] hover:bg-[#1e3270] text-white px-8 py-3 rounded-full text-sm font-medium transition-colors shadow-sm"
+                  >
                     Upload Product
                   </button>
                   <button 
@@ -334,6 +339,12 @@ const Shop_mgt = () => {
       <ProductBuilder
         isOpen={isProductBuilderOpen}
         onClose={() => setIsProductBuilderOpen(false)}
+      />
+
+      {/* Add Product Modal */}
+      <AddProduct
+        isOpen={isAddProductOpen}
+        onClose={() => setIsAddProductOpen(false)}
       />
     </div>
   );
