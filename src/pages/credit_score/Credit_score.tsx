@@ -1,10 +1,56 @@
 import { useState } from "react";
 import Header from "../../component/Header";
 import { creditScoreData } from "./creditscore";
+import images from "../../constants/images";
+
+interface DropdownProps {
+  options: string[];
+  selected: string;
+  onSelect: (option: string) => void;
+}
+
+const CustomDropdown = ({ options, selected, onSelect }: DropdownProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleSelect = (option: string) => {
+    onSelect(option);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="relative inline-block text-left">
+      <div>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="inline-flex justify-between w-35 cursor-pointer rounded-md border border-[#00000080] bg-white px-4 py-2 text-sm font-medium text-black shadow-sm hover:bg-gray-50 focus:outline-none"
+        >
+          {selected}
+          <img src={images.arrow} alt="" />
+        </button>
+      </div>
+
+      {isOpen && (
+        <div className="absolute mt-2 w-48 origin-top-right rounded-xl shadow-xl bg-white border border-gray-200 z-50">
+          <ul className="py-2">
+            {options.map((option: string, index: number) => (
+              <li
+                key={index}
+                onClick={() => handleSelect(option)}
+                className="px-4 py-2 text-black text-sm cursor-pointer hover:bg-gray-100"
+              >
+                {option}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Credit_score = () => {
-  const [sortBy, setSortBy] = useState("");
-  const [filterBy, setFilterBy] = useState("");
+  const [sortBy, setSortBy] = useState("Sort by");
+  const [filterBy, setFilterBy] = useState("Filter");
   const [searchTerm, setSearchTerm] = useState("");
   const [showCreditModal, setShowCreditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
@@ -37,21 +83,38 @@ const Credit_score = () => {
     return "bg-red-50";
   };
 
-  const filteredData = creditScoreData.filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredData = creditScoreData.filter((item) => {
+    // Filter by search term
+    const matchesSearch = item.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    // Filter by credit score category
+    let matchesFilter = true;
+    if (filterBy === "Excellent (90+)") {
+      matchesFilter = item.creditScore >= 90;
+    } else if (filterBy === "Good (70-89)") {
+      matchesFilter = item.creditScore >= 70 && item.creditScore < 90;
+    } else if (filterBy === "Fair (50-69)") {
+      matchesFilter = item.creditScore >= 50 && item.creditScore < 70;
+    } else if (filterBy === "Poor (Below 50)") {
+      matchesFilter = item.creditScore < 50;
+    }
+
+    return matchesSearch && matchesFilter;
+  });
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen">
+    <div className="bg-[#F5F7FF] min-h-screen">
       {/* Header Component */}
-      <Header 
+      <Header
         adminName="Hi, Admin"
-        adminRole="Administrator"
+        // adminRole="Administrator"
         adminImage="/assets/layout/admin.png"
-        showNotification={true}
-        notificationCount={0}
+        // showNotification={true}
+        // notificationCount={0}
         onNotificationClick={handleNotificationClick}
-        showAdminRole={false}
+        // showAdminRole={false}
       />
 
       {/* Main Content */}
@@ -64,53 +127,49 @@ const Credit_score = () => {
           {/* Left side - Sort and Filter dropdowns */}
           <div className="flex items-center space-x-4">
             {/* Sort By Dropdown */}
-            <div className="relative">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none pr-8 min-w-[120px]"
-              >
-                <option value="">Sort by</option>
-                <option value="name">Name</option>
-                <option value="score">Credit Score</option>
-                <option value="date">Date</option>
-              </select>
-              <svg className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
+
+            <CustomDropdown
+              options={["Sort by", "Name", "Credit Score", "Date"]}
+              selected={sortBy}
+              onSelect={setSortBy}
+            />
 
             {/* Filter Dropdown */}
-            <div className="relative">
-              <select
-                value={filterBy}
-                onChange={(e) => setFilterBy(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none pr-8 min-w-[100px]"
-              >
-                <option value="">Filter</option>
-                <option value="excellent">Excellent (90+)</option>
-                <option value="good">Good (70-89)</option>
-                <option value="fair">Fair (50-69)</option>
-                <option value="poor">Poor (Below 50)</option>
-              </select>
-              <svg className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
+            <CustomDropdown
+              options={[
+                "Filter",
+                "Excellent (90+)",
+                "Good (70-89)",
+                "Fair (50-69)",
+                "Poor (Below 50)",
+              ]}
+              selected={filterBy || "Filter"}
+              onSelect={setFilterBy}
+            />
           </div>
 
           {/* Right side - Search Box */}
           <div className="relative">
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm w-80"
+              className="pl-12 pr-6 py-3.5 border border-[#00000080] rounded-lg text-[15px] w-[320px] focus:outline-none bg-white shadow-[0_2px_6px_rgba(0,0,0,0.05)] placeholder-gray-400"
             />
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <svg
+                className="h-4 w-4 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
               </svg>
             </div>
           </div>
@@ -121,53 +180,65 @@ const Credit_score = () => {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-200 bg-gray-50">
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
-                    <input type="checkbox" className="rounded" />
+                <tr className="border-b border-gray-200 bg-[#EBEBEB]">
+                  <th className="px-6 py-4 text-center text-sm text-black">
+                    <input type="checkbox" className="rounded cursor-pointer" />
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                  <th className="px-6 py-4 text-center text-sm text-black">
                     Name
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                  <th className="px-6 py-4 text-center text-sm text-black">
                     Credit Score
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                  <th className="px-6 py-4 text-center text-sm text-black">
                     Loan Limit
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                  <th className="px-6 py-4 text-center text-sm text-black">
                     Date
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                  <th className="px-6 py-4 text-center text-sm text-black">
                     Action
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white">
                 {filteredData.map((item, index) => (
-                  <tr key={item.id} className={`${index !== filteredData.length - 1 ? 'border-b border-gray-100' : ''} hover:bg-gray-50`}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <input type="checkbox" className="rounded" />
+                  <tr
+                    key={item.id}
+                    className={`${
+                      index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
+                    } transition-colors border-b border-gray-100 last:border-b-0`}
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                      <input
+                        type="checkbox"
+                        className="rounded cursor-pointer"
+                      />
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
                       {item.name}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getScoreBackground(item.creditScore)}`}>
+                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                      <div
+                        className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getScoreBackground(
+                          item.creditScore
+                        )}`}
+                      >
                         <span className={getScoreColor(item.creditScore)}>
                           {item.creditScore}%
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-black text-center">
                       ₦{item.loanLimit.toLocaleString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-black text-center">
                       {item.date}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button 
-                        className="text-white px-6 py-2 rounded-full hover:opacity-90 transition-opacity text-sm font-medium"
-                        style={{ backgroundColor: '#273E8E' }}
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center">
+                      <button
+                        className="text-white px-6 py-2 rounded-full hover:opacity-90 transition-opacity text-sm font-medium cursor-pointer"
+                        style={{ backgroundColor: "#273E8E" }}
                         onClick={() => handleViewDetails(item)}
                       >
                         View Details
@@ -183,104 +254,109 @@ const Credit_score = () => {
 
       {/* Credit Check Modal */}
       {showCreditModal && selectedUser && (
-        <div className="fixed inset-0 backdrop-blur-lg flex items-end justify-end z-50 p-8">
-          <div className="bg-white rounded-lg shadow-xl" style={{ width: '675px', height: '868px' }}>
+        <div className="fixed inset-0 backdrop-blur-sm flex items-start justify-end z-50 p-6">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg h-[95vh] overflow-hidden">
             {/* Modal Header */}
-            <div className="flex justify-between items-center p-6 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">Credit Check - {selectedUser.name}</h2>
+            <div className="flex justify-between items-center px-8 py-6 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Credit Check - {selectedUser.name}
+              </h2>
               <button
                 onClick={closeModal}
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:text-gray-700 hover:bg-gray-200"
+                className="w-10 h-10 flex items-center justify-center rounded-full cursor-pointer transition"
               >
-                ×
+                <img src={images.cross} alt="Close" className="w-6 h-6" />
               </button>
             </div>
 
             {/* Modal Content */}
-            <div className="p-6 h-full overflow-y-auto">
-              {/* Credit Score Section with Gradient Background - Exact match to photo */}
-              <div 
-                className="relative rounded-2xl p-8 mb-8 text-center"
+            <div className="px-8 py-6 overflow-y-auto max-h-[calc(95vh-80px)]">
+              {/* Credit Score Section */}
+              <div
+                className="rounded-xl mb-10 p-6"
                 style={{
-                  background: 'linear-gradient(135deg, #273E8E 0%, #FFA500 100%)',
-                  height: '320px'
+                  background:
+                    "linear-gradient(135deg, #273E8E 0%, #FFA500 100%)",
+                  boxShadow: "0 4px 18px rgba(0, 0, 0, 0.15)",
                 }}
               >
-                {/* Credit Score Circular Progress */}
-                <div className="flex items-center justify-center h-full">
-                  <div className="relative">
-                    {/* White background circle with shadow */}
-                    <div 
-                      className="w-56 h-56 bg-white rounded-full flex items-center justify-center"
-                      style={{
-                        boxShadow: '0 8px 32px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.05)'
-                      }}
-                    >
-                      <div className="relative w-48 h-48">
-                        {/* SVG Credit Score Gauge - Exact match to photo */}
-                        <svg className="w-48 h-48" viewBox="0 0 200 200">
-                          {/* Define gradient for the arc from red to green */}
-                          <defs>
-                            <linearGradient id="arcGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" stopColor="#FF0000" />
-                              <stop offset="100%" stopColor="#008000" />
-                            </linearGradient>
-                          </defs>
-                          
-                          {/* Tick marks around the gauge - inside position like in photo */}
-                          {Array.from({ length: 72 }, (_, i) => {
-                            const angle = (i * 360) / 72;
-                            const isMainTick = i % 18 === 0;
-                            const tickLength = isMainTick ? 12 : 8;
-                            const tickWidth = isMainTick ? 2 : 1;
-                            // Reduced radius so tick marks are inside the arc
-                            const radius = 75; // Inner radius for tick marks
-                            const x1 = 100 + (radius - tickLength) * Math.cos(angle * Math.PI / 180);
-                            const y1 = 100 + (radius - tickLength) * Math.sin(angle * Math.PI / 180);
-                            const x2 = 100 + radius * Math.cos(angle * Math.PI / 180);
-                            const y2 = 100 + radius * Math.sin(angle * Math.PI / 180);
-                            
-                            return (
-                              <line
-                                key={i}
-                                x1={x1}
-                                y1={y1}
-                                x2={x2}
-                                y2={y2}
-                                stroke="#008000"
-                                strokeWidth={tickWidth}
-                              />
-                            );
-                          })}
-                          
-                          {/* Single arc with gradient from red to green - outside position like in photo */}
-                          <path
-                            d="M 10 100 A 90 90 0 0 1 190 100"
-                            stroke="url(#arcGradient)"
-                            strokeWidth="16"
-                            fill="none"
-                            strokeLinecap="round"
-                          />
-                          
-                          {/* Needle - exact match to photo (thin and pointed) */}
-                          <g transform="translate(100,100)">
-                            {/* Needle triangle shape */}
-                            <polygon
-                              points="0,-70 -3,-5 3,-5"
-                              fill="#374151"
-                              transform={`rotate(${(selectedUser.creditScore / 100) * 180 - 90})`}
+                <div className="flex items-center justify-center">
+                  <div className="relative w-52 h-52 bg-white rounded-full shadow-xl flex items-center justify-center">
+                    <div className="relative w-44 h-44">
+                      <svg className="w-full h-full" viewBox="0 0 200 200">
+                        <defs>
+                          <linearGradient
+                            id="arcGradient"
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="0%"
+                          >
+                            <stop offset="0%" stopColor="#FF0000" />
+                            <stop offset="100%" stopColor="#008000" />
+                          </linearGradient>
+                        </defs>
+
+                        {Array.from({ length: 72 }, (_, i) => {
+                          const angle = (i * 360) / 72;
+                          const isMainTick = i % 18 === 0;
+                          const tickLength = isMainTick ? 10 : 6;
+                          const tickWidth = isMainTick ? 1.5 : 1;
+                          const radius = 75;
+                          const x1 =
+                            100 +
+                            (radius - tickLength) *
+                              Math.cos((angle * Math.PI) / 180);
+                          const y1 =
+                            100 +
+                            (radius - tickLength) *
+                              Math.sin((angle * Math.PI) / 180);
+                          const x2 =
+                            100 + radius * Math.cos((angle * Math.PI) / 180);
+                          const y2 =
+                            100 + radius * Math.sin((angle * Math.PI) / 180);
+
+                          return (
+                            <line
+                              key={i}
+                              x1={x1}
+                              y1={y1}
+                              x2={x2}
+                              y2={y2}
+                              stroke="#008000"
+                              strokeWidth={tickWidth}
                             />
-                            {/* Center circle with white dot */}
-                            <circle cx="0" cy="0" r="6" fill="#374151" />
-                            <circle cx="0" cy="0" r="2.5" fill="white" />
-                          </g>
-                        </svg>
-                        
-                        {/* Score text - positioned exactly like photo */}
-                        <div className="absolute inset-0 flex flex-col items-center justify-center">
-                          <span className="text-xs text-gray-400 mb-1" style={{ marginTop: '45px' }}>My Credit Score</span>
-                          <span className="text-4xl font-bold text-gray-900" style={{ lineHeight: '1' }}>{selectedUser.creditScore}%</span>
-                        </div>
+                          );
+                        })}
+
+                        <path
+                          d="M 10 100 A 90 90 0 0 1 190 100"
+                          stroke="url(#arcGradient)"
+                          strokeWidth="16"
+                          fill="none"
+                          strokeLinecap="round"
+                        />
+
+                        <g transform="translate(100,100)">
+                          <polygon
+                            points="0,-70 -3,-5 3,-5"
+                            fill="#374151"
+                            transform={`rotate(${
+                              (selectedUser.creditScore / 100) * 180 - 90
+                            })`}
+                          />
+                          <circle cx="0" cy="0" r="6" fill="#374151" />
+                          <circle cx="0" cy="0" r="2.5" fill="white" />
+                        </g>
+                      </svg>
+
+                      <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <span className="text-xs text-gray-500 mb-1 mt-10">
+                          My Credit Score
+                        </span>
+                        <span className="text-4xl font-bold text-gray-900 leading-none">
+                          {selectedUser.creditScore}%
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -288,28 +364,44 @@ const Credit_score = () => {
               </div>
 
               {/* Account Information */}
-              <div className="space-y-6">
+              <div className="space-y-5">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Account Number</label>
-                  <div className="bg-gray-50 p-4 rounded-lg border">
-                    <span className="text-gray-900 font-medium">0001245659434</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Account Number
+                  </label>
+                  <div className="bg-gray-50 px-5 py-3 rounded-lg border text-sm text-gray-900 font-medium">
+                    002334593934
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Bank Name</label>
-                  <div className="bg-gray-50 p-4 rounded-lg border flex justify-between items-center">
-                    <span className="text-gray-900 font-medium">Access Bank</span>
-                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Bank Name
+                  </label>
+                  <div className="bg-gray-50 px-5 py-3 rounded-lg border flex justify-between items-center text-sm text-gray-900 font-medium">
+                    Access Bank
+                    <svg
+                      className="w-4 h-4 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Account Name</label>
-                  <div className="bg-gray-50 p-4 rounded-lg border">
-                    <span className="text-gray-900 font-medium">{selectedUser.name}</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Account Name
+                  </label>
+                  <div className="bg-gray-50 px-5 py-3 rounded-lg border text-sm text-gray-900 font-medium">
+                    {selectedUser.name}
                   </div>
                 </div>
               </div>
@@ -321,4 +413,4 @@ const Credit_score = () => {
   );
 };
 
-export default Credit_score
+export default Credit_score;

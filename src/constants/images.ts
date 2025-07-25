@@ -18,6 +18,7 @@ const images = {
   bell : "/assets/images/bell.svg",
   dots : "/assets/images/3dots.svg",
   cross : "/assets/images/cross.svg",
+  arrow : "/assets/images/arrow.svg", 
 };
 
 export default images;

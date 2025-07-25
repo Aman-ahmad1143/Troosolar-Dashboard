@@ -50,7 +50,7 @@ const DashboardLatestUsers: React.FC<DashboardLatestUsersProps> = ({
                   : ""
               } ${
                 idx % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
-              } hover:bg-gray-50`}
+              } `}
             >
               <td className="px-6 py-4 whitespace-nowrap flex justify-center items-center">
                 <input type="checkbox" className="rounded cursor-pointer" />

@@ -182,83 +182,89 @@ const RepaymentHistory: React.FC<RepaymentHistoryProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end items-start min-h-screen p-6">
-      <div 
-        className="fixed inset-0 backdrop-blur-sm bg-white/30" 
+   <div className="fixed inset-0 z-50 flex items-center justify-center">
+  {/* Overlay */}
+  <div 
+    className="fixed inset-0 backdrop-blur-sm bg-white/30" 
+    onClick={onClose}
+  ></div>
+
+  {/* Modal Container */}
+  <div className="relative bg-white w-full h-full sm:max-w-3xl sm:h-auto sm:rounded-2xl z-10 shadow-xl flex flex-col max-h-screen">
+
+    {/* Header */}
+    <div className="flex items-center justify-between p-6 border-b border-gray-200">
+      <h2 className="text-xl font-semibold text-gray-900">Repayment History</h2>
+      <button
         onClick={onClose}
-      ></div>
+        className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+      >
+        <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    {/* Scrollable Body */}
+    <div className="flex-1 overflow-y-auto p-6 space-y-10">
       
-      <div className="relative bg-white rounded-2xl shadow-xl z-10" style={{ width: '675px', height: '900px' }}>
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Repayment History</h2>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-          >
-            <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-
-        <div className="p-8 h-full overflow-y-auto" style={{ height: 'calc(954px - 80px)' }}>
-          {/* Loan Details Section */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Loan Details</h3>
-            <div className="bg-gray-50 rounded-xl p-1 space-y-4">
-              <div className="flex justify-between items-center py-0.5">
-                <span className="text-sm text-gray-600 font-medium">Loan Status</span>
-                <span 
-                  className="px-4 py-1.5 text-sm font-medium rounded-full"
-                  style={{ 
-                    backgroundColor: statusColors.bg,
-                    color: statusColors.text
-                  }}
-                >
-                  {loanStatus}
-                </span>
-              </div>
-              <div className="flex justify-between items-center py-2">
-                <span className="text-sm text-gray-600 font-medium">Loan Amount</span>
-                <span className="text-sm font-semibold text-gray-900">₦200,000</span>
-              </div>
-              <div className="flex justify-between items-center py-2">
-                <span className="text-sm text-gray-600 font-medium">Interest Rate</span>
-                <span className="text-sm font-semibold text-gray-900">5%</span>
-              </div>
-              <div className="flex justify-between items-center py-2">
-                <span className="text-sm text-gray-600 font-medium">Loan Period</span>
-                <span className="text-sm font-semibold text-gray-900">6 months</span>
-              </div>
-              <div className="flex justify-between items-center py-2">
-                <span className="text-sm text-gray-600 font-medium">Disbursement Date</span>
-                <span className="text-sm font-semibold text-gray-900">July 3, 2025</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Repayment History Section */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Repayment History</h3>
-            {renderContent()}
-          </div>
-
-          {/* Send Notification Button */}
-          <div className="absolute bottom-8 left-8 right-8">
-            <button 
-              className="w-full bg-[#2946A9] text-white py-4 rounded-full font-semibold text-lg hover:bg-[#243c8c] transition-colors"
-              onClick={() => {
-                console.log('Send notification clicked');
-                // Add notification logic here
+      {/* Loan Details */}
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Loan Details</h3>
+        <div className="bg-gray-50 rounded-xl p-4 space-y-4">
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600 font-medium">Loan Status</span>
+            <span 
+              className="px-4 py-1.5 text-sm font-medium rounded-full"
+              style={{ 
+                backgroundColor: statusColors.bg,
+                color: statusColors.text
               }}
             >
-              Send Notification
-            </button>
+              {loanStatus}
+            </span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600 font-medium">Loan Amount</span>
+            <span className="text-sm font-semibold text-gray-900">₦200,000</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600 font-medium">Interest Rate</span>
+            <span className="text-sm font-semibold text-gray-900">5%</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600 font-medium">Loan Period</span>
+            <span className="text-sm font-semibold text-gray-900">6 months</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600 font-medium">Disbursement Date</span>
+            <span className="text-sm font-semibold text-gray-900">July 3, 2025</span>
           </div>
         </div>
       </div>
+
+      {/* Repayment History */}
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Repayment History</h3>
+        {renderContent()}
+      </div>
     </div>
+
+    {/* Footer Action */}
+    <div className="p-6 border-t border-gray-200">
+      <button 
+        className="w-full bg-[#2946A9] text-white py-4 rounded-full font-semibold text-lg hover:bg-[#243c8c] transition-colors"
+        onClick={() => {
+          console.log('Send notification clicked');
+          // Add notification logic here
+        }}
+      >
+        Send Notification
+      </button>
+    </div>
+  </div>
+</div>
+
   );
 };
 

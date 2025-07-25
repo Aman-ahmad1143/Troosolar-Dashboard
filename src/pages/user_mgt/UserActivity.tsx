@@ -312,7 +312,7 @@ const UserActivity: React.FC = () => {
                     key={idx}
                     className={`${
                       idx % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
-                    } hover:bg-gray-50`}
+                    } `}
                   >
                     <td className="p-4">
                       <input className="cursor-pointer" type="checkbox" />

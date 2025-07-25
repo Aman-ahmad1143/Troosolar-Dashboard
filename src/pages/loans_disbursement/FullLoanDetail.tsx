@@ -190,12 +190,12 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({ isOpen, onClose, loanId
   if (!isOpen || !selectedLoan) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end items-end">
+    <div className="fixed inset-0 z-50 flex justify-center items-end sm:items-center">
       <div 
         className="fixed inset-0 backdrop-blur-md bg-opacity-0" 
         onClick={onClose}
       ></div>
-      <div className="relative bg-white w-[675px] h-[900px] rounded-xl shadow-lg overflow-y-auto z-10">
+      <div className="relative bg-white w-full h-full sm:w-[675px] sm:h-[900px] rounded-t-xl sm:rounded-xl shadow-lg overflow-y-auto z-10">
         <div className="flex justify-between items-center px-5 pt-4 pb-2">
           <h2 className="text-xl font-semibold">Full Loan Details</h2>
           <button 

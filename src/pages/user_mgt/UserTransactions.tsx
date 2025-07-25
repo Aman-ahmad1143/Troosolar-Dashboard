@@ -541,7 +541,7 @@ const UserTransactions = () => {
                     key={transaction.id}
                     className={`${
                       index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
-                    } hover:bg-gray-100 transition-colors border-b border-gray-100 last:border-b-0`}
+                    } transition-colors border-b border-gray-100 last:border-b-0`}
                   >
                     <td className="px-6 py-4 whitespace-nowrap text-center">
                       <input

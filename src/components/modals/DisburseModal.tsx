@@ -42,13 +42,15 @@ const DisburseModal: React.FC<DisburseModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end items-start min-h-screen p-6">
+<div className="fixed inset-0 z-50 flex items-end sm:items-start justify-end sm:justify-end p-0 sm:p-6">
+
       <div 
         className="fixed inset-0 backdrop-blur-sm bg-white/30" 
         onClick={handleClose}
       ></div>
       
-      <div className="relative bg-white rounded-2xl shadow-xl z-10 w-[500px] max-w-[90vw]">
+<div className="relative bg-white rounded-t-2xl sm:rounded-2xl shadow-xl z-10 w-full h-full sm:w-[500px] sm:h-auto sm:max-w-[90vw]">
+
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">Loan Disbursement</h2>
