@@ -52,7 +52,7 @@ const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
 
       {/* Admin Profile Card */}
       <div 
-        className="bg-gradient-to-br from-[#273E8E] to-[#FFA500] rounded-lg mb-6 relative"
+        className="bg-gradient-to-r from-[#4e4376]  to-[#f9d423] rounded-lg mb-6 relative"
         style={{ 
           width: '100%',
           maxWidth: '1209px',
@@ -77,7 +77,7 @@ const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
             
             <button 
               onClick={handleEditProfile}
-              className="bg-white text-gray-800 px-8 py-3 rounded-full font-sm hover:bg-gray-100 transition-colors w-full max-w-2xl"
+              className="bg-white text-gray-800 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors w-full max-w-2xl"
             >
               Edit Profile
             </button>
@@ -112,7 +112,7 @@ const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
                 <p className="text-lg font-medium">{admin.bvn}</p>
               </div>
 
-              <button className="bg-[#FFFFFF] text-black px-6 py-3 rounded-full font-sm hover:bg-[#FFFFFF] transition-colors">
+              <button className="bg-[#FFFFFF] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#FFFFFF] transition-colors">
                 Delete Admin
               </button>
             </div>
@@ -160,7 +160,8 @@ const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
           </div>
           <div className="divide-y divide-gray-100">
             {admin.activity.map((activity) => (
-              <div key={activity.id} className="px-6 py-4 hover:bg-gray-50 transition-colors">
+              <div key={activity.id} 
+              className="px-6 py-4 hover:bg-gray-50 transition-colors">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center space-x-4">
                     <input 

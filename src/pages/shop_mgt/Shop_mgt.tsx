@@ -154,13 +154,13 @@ const Shop_mgt = () => {
                 <div className="flex items-center space-x-3 mt-[-25px]">
                   <button
                     onClick={() => setIsAddProductOpen(true)}
-                    className="bg-[#273E8E] hover:bg-[#1e3270] text-white px-8 py-3.5 rounded-full text-sm font-medium transition-colors shadow-sm cursor-pointer"
+                    className="bg-[#273E8E]  hover:bg-[#273E8E] text-white px-8 py-3.5 rounded-full text-sm font-medium transition-colors shadow-sm cursor-pointer"
                   >
                     Upload Product
                   </button>
                   <button
                     onClick={() => setIsProductBuilderOpen(true)}
-                    className="bg-[#E8A91D] hover:bg-orange-600 text-white px-8 py-3.5 rounded-full text-sm font-medium transition-colors shadow-sm cursor-pointer"
+                    className="bg-[#E8A91D] hover:bg-[#E8A91D] text-white px-8 py-3.5 rounded-full text-sm font-medium transition-colors shadow-sm cursor-pointer"
                   >
                     Create Bundle
                   </button>

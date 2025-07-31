@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import images from '../../constants/images';
 
 interface AddCustomServiceProps {
   isOpen: boolean;
@@ -31,18 +32,16 @@ const AddCustomService = ({ isOpen, onClose }: AddCustomServiceProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex items-start justify-end z-[60]">
+    <div className="fixed inset-0 backdrop-brightness-50 bg-opacity-50 flex items-start justify-end z-[60]">
       <div className="bg-white rounded-lg w-full max-w-md">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className="text-lg font-semibold text-gray-900">Add Custom Service</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50"
+           
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+             <img src={images.cross} className="w-7 h-7" alt="" />
           </button>
         </div>
 

@@ -35,7 +35,7 @@ const Admin = () => {
       
       {/* Admin Profile Card */}
       <div 
-        className="bg-gradient-to-br from-[#273E8E]  to-[#FFA500] rounded-lg mb-6 relative"
+        className="bg-gradient-to-r from-[#4e4376]  to-[#f9d423] rounded-lg mb-6 relative"
         style={{ 
           width: '100%',
           maxWidth: '1209px',
@@ -60,7 +60,7 @@ const Admin = () => {
             
             <button 
               onClick={handleEditProfile}
-              className="bg-white text-gray-800 px-8 py-3 rounded-full font-sm hover:bg-gray-100 transition-colors w-full max-w-2xl"
+              className="bg-white text-gray-900 px-8 py-3 rounded-full font-semibold transition-colors w-full max-w-2xl"
             >
               Edit Profile
             </button>
@@ -95,7 +95,7 @@ const Admin = () => {
                 <p className="text-lg font-medium">{adminData.bvn}</p>
               </div>
 
-              <button className="bg-white text-[#000000] px-6 py-3 rounded-full font-sm hover:bg-gray-100 transition-colors">
+              <button className="bg-white text-[#000000] px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
                 Add new Admin
               </button>
             </div>
@@ -107,7 +107,7 @@ const Admin = () => {
       <div className="mt-12 px-2">
         <div className="mb-8">
           {/* Tab Group Container */}
-          <div className="bg-white rounded-full p-1 shadow-sm border border-gray-200 flex" style={{ width: '200px', height: '45px' }}>
+          <div className="bg-white rounded-full p-2 shadow-sm border border-gray-200 flex" style={{ width: '200px', height: '45px' }}>
             <button
               onClick={() => setActiveTab('activity')}
               className={`px-4 py-1 text-xs rounded-full font-medium transition-colors flex-1 ${
@@ -161,7 +161,7 @@ const Admin = () => {
 
         {/* Activity Table */}
         {activeTab === 'activity' && (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
             <div className="bg-[#EBEBEB] px-6 py-4 border-b border-gray-200">
               <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-4">
@@ -175,8 +175,11 @@ const Admin = () => {
               </div>
             </div>
             <div className="divide-y divide-gray-100">
-              {adminData.activity.map((activity) => (
-                <div key={activity.id} className="px-6 py-4 hover:bg-gray-50 transition-colors">
+              {adminData.activity.map((activity, index) => (
+                <div key={activity.id} 
+                className={`px-6 py-4 ${
+                      index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
+                    } transition-colors border-b border-gray-100 last:border-b-0 hover:bg-gray-50`}>
                   <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-4">
                       <input 
@@ -219,7 +222,9 @@ const Admin = () => {
             {/* Table Body */}
             <div className="divide-y divide-gray-100">
               {allAdminsData.map((admin) => (
-                <div key={admin.id} className="px-6 py-4 hover:bg-gray-50 transition-colors">
+                <div key={admin.id} 
+                className="px-6 py-4 hover:bg-gray-50 transition-colors">
+                  
                   <div className="grid grid-cols-6 gap-4 items-center">
                     <div className="flex items-center space-x-3">
                       <input 

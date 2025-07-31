@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DisburseModal from "../../components/modals/DisburseModal";
 import images from "../../constants/images";
 import type { LoanDetail } from "../../component/users/UserLoanData";
+import jsPDF from 'jspdf';
 
 interface FullLoanDetailProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
   const [activeTab, setActiveTab] = useState<"loan" | "financial">("loan");
   const [showDisburseModal, setShowDisburseModal] = useState(false);
   const [loanData, setLoanData] = useState<LoanDetail | null>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   // Sample loan data - in real app, this would come from props or API call based on loanId
   const getLoanById = (id: string): LoanDetail | null => {
@@ -127,23 +129,58 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
       },
     ];
 
-    return sampleLoans.find((loan) => loan.id === id) || null;
+    const foundLoan = sampleLoans.find((loan) => loan.id === id);
+    
+    // If loan not found, create a default loan for the user
+    if (!foundLoan) {
+      return {
+        id: id,
+        userId: id,
+        name: "Unknown User",
+        loanLimit: "₦0",
+        loanAmount: "₦0",
+        loanPeriod: "N/A",
+        repaymentDuration: "N/A",
+        financingPartner: "N/A",
+        interestRate: "0%",
+        sendStatus: "Pending",
+        sendDate: "Not yet sent",
+        approvalStatus: "Pending",
+        approvalDate: "Not yet approved",
+        disbursementStatus: "Pending",
+        disbursementDate: "Not yet disbursed",
+      };
+    }
+    
+    return foundLoan;
   };
 
   const selectedLoan = loanData || getLoanById(loanId);
 
-  // Initialize loan data when component mounts
+  // Initialize loan data when component mounts or loanId changes
   React.useEffect(() => {
-    if (!loanData) {
-      setLoanData(getLoanById(loanId));
+    if (loanId && (!loanData || loanData.id !== loanId)) {
+      const foundLoan = getLoanById(loanId);
+      if (foundLoan) {
+        setLoanData(foundLoan);
+      }
     }
   }, [loanId, loanData]);
 
+  // Reset state when modal closes
+  React.useEffect(() => {
+    if (!isOpen) {
+      setActiveTab("loan");
+      setIsDownloading(false);
+    }
+  }, [isOpen]);
+
   // Handle disbursement status change
   const handleDisburse = (loanId: string, status: string) => {
-    if (selectedLoan) {
+    const loan = selectedLoan || getLoanById(loanId);
+    if (loan) {
       const updatedLoan: LoanDetail = {
-        ...selectedLoan,
+        ...loan,
         disbursementStatus: status as "Pending" | "Completed",
         disbursementDate:
           status === "Completed"
@@ -156,6 +193,143 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
       if (onDisbursementUpdate) {
         onDisbursementUpdate(loanId, status);
       }
+    }
+  };
+
+  // Handle account statement download
+  const handleDownloadStatement = () => {
+    const loan = selectedLoan || getLoanById(loanId);
+    if (!loan) {
+      alert('Unable to find loan data. Please try again.');
+      return;
+    }
+    
+    setIsDownloading(true);
+    
+    try {
+      // Create new PDF document
+      const doc = new jsPDF();
+      
+      // Set font and colors
+      doc.setFont("helvetica");
+      
+      // Header
+      doc.setFontSize(20);
+      doc.setTextColor(39, 62, 142); // Blue color
+      doc.text("TROOSOLAR FINANCIAL SERVICES", 20, 25);
+      
+      doc.setFontSize(16);
+      doc.setTextColor(0, 0, 0);
+      doc.text("ACCOUNT STATEMENT", 20, 35);
+      
+      // Add a line separator
+      doc.setLineWidth(0.5);
+      doc.line(20, 40, 190, 40);
+      
+      // Customer Information Section
+      let yPosition = 55;
+      doc.setFontSize(14);
+      doc.setTextColor(39, 62, 142);
+      doc.text("Customer Information", 20, yPosition);
+      
+      yPosition += 10;
+      doc.setFontSize(10);
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Name: ${loan.name}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Customer ID: ${loan.userId}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Loan ID: ${loan.id}`, 25, yPosition);
+      
+      // Loan Details Section
+      yPosition += 15;
+      doc.setFontSize(14);
+      doc.setTextColor(39, 62, 142);
+      doc.text("Loan Details", 20, yPosition);
+      
+      yPosition += 10;
+      doc.setFontSize(10);
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Loan Amount: ${loan.loanAmount}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Loan Limit: ${loan.loanLimit}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Loan Period: ${loan.loanPeriod}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Interest Rate: ${loan.interestRate}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Repayment Duration: ${loan.repaymentDuration}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Financing Partner: ${loan.financingPartner}`, 25, yPosition);
+      
+      // Status Information Section
+      yPosition += 15;
+      doc.setFontSize(14);
+      doc.setTextColor(39, 62, 142);
+      doc.text("Status Information", 20, yPosition);
+      
+      yPosition += 10;
+      doc.setFontSize(10);
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Send Status: ${loan.sendStatus}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Send Date: ${loan.sendDate}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Approval Status: ${loan.approvalStatus}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Approval Date: ${loan.approvalDate}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Disbursement Status: ${loan.disbursementStatus}`, 25, yPosition);
+      yPosition += 6;
+      doc.text(`Disbursement Date: ${loan.disbursementDate}`, 25, yPosition);
+      
+      // Financial Summary Section
+      yPosition += 15;
+      doc.setFontSize(14);
+      doc.setTextColor(39, 62, 142);
+      doc.text("Financial Summary", 20, yPosition);
+      
+      yPosition += 10;
+      doc.setFontSize(10);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Total Income: ₦2,000,000", 25, yPosition);
+      yPosition += 6;
+      doc.text("Monthly Income: ₦200,000", 25, yPosition);
+      yPosition += 6;
+      doc.text("Total Debt: ₦400,000", 25, yPosition);
+      yPosition += 6;
+      doc.text("  • ABC Bank: ₦200,000", 30, yPosition);
+      yPosition += 6;
+      doc.text("  • Defa Bank: ₦200,000", 30, yPosition);
+      
+      // Footer
+      yPosition += 20;
+      doc.setLineWidth(0.3);
+      doc.line(20, yPosition, 190, yPosition);
+      
+      yPosition += 10;
+      doc.setFontSize(8);
+      doc.setTextColor(100, 100, 100);
+      doc.text(`Statement Generated: ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`, 20, yPosition);
+      yPosition += 5;
+      doc.text("This is an official document from Troosolar Financial Services.", 20, yPosition);
+      yPosition += 5;
+      doc.text("For inquiries, contact customer support.", 20, yPosition);
+      
+      // Generate filename and save
+      const filename = `Account-Statement-${loan.name.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
+      doc.save(filename);
+      
+      // Show success message
+      setTimeout(() => {
+        alert('PDF account statement downloaded successfully!');
+        setIsDownloading(false);
+      }, 500);
+      
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Failed to generate PDF account statement. Please try again.');
+      setIsDownloading(false);
     }
   };
 
@@ -190,7 +364,10 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
     );
   };
 
-  if (!isOpen || !selectedLoan) return null;
+  if (!isOpen) return null;
+
+  // Get the current loan data - guaranteed to exist since getLoanById creates a fallback
+  const currentLoan = selectedLoan || getLoanById(loanId)!;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end items-end sm:items-center">
@@ -242,25 +419,25 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
                 <div className="flex justify-between py-3 border-b border-[#CDCDCD]">
                   <span className="text-[#00000080] text-sm">Name</span>
                   <span className="font-medium text-sm text-right">
-                    {selectedLoan.name}
+                    {currentLoan.name}
                   </span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-[#CDCDCD]">
                   <span className="text-[#00000080] text-sm">Loan Limit</span>
                   <span className="font-medium text-sm text-right">
-                    {selectedLoan.loanLimit}
+                    {currentLoan.loanLimit}
                   </span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-[#CDCDCD]">
                   <span className="text-[#00000080] text-sm">Loan Amount</span>
                   <span className="font-medium text-sm text-right">
-                    {selectedLoan.loanAmount}
+                    {currentLoan.loanAmount}
                   </span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-[#CDCDCD]">
                   <span className="text-[#00000080] text-sm">Loan Period</span>
                   <span className="font-medium text-sm text-right">
-                    {selectedLoan.loanPeriod}
+                    {currentLoan.loanPeriod}
                   </span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-[#CDCDCD]">
@@ -268,7 +445,7 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
                     Repayment duration
                   </span>
                   <span className="font-medium text-sm text-right">
-                    {selectedLoan.repaymentDuration}
+                    {currentLoan.repaymentDuration}
                   </span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-[#CDCDCD]">
@@ -276,7 +453,7 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
                     Financing partner
                   </span>
                   <span className="font-medium text-sm text-right">
-                    {selectedLoan.financingPartner}
+                    {currentLoan.financingPartner}
                   </span>
                 </div>
                 <div className="flex justify-between py-3">
@@ -284,7 +461,7 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
                     Interest rate
                   </span>
                   <span className="font-medium text-sm text-right">
-                    {selectedLoan.interestRate}
+                    {currentLoan.interestRate}
                   </span>
                 </div>
               </div>
@@ -297,40 +474,40 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
                   <span className="text-[#00000080] text-sm">
                     Send Status (to partner)
                   </span>
-                  <StatusBadge status={selectedLoan.sendStatus} />
+                  <StatusBadge status={currentLoan.sendStatus} />
                 </div>
                 <div className="flex justify-between py-3 border-b border-[#CDCDCD]">
                   <span className="text-[#00000080] text-sm">Send Date</span>
                   <span className="font-medium text-sm text-right">
-                    {selectedLoan.sendDate}
+                    {currentLoan.sendDate}
                   </span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-[#CDCDCD]">
                   <span className="text-[#00000080] text-sm">
                     Approval Status (from partner)
                   </span>
-                  <StatusBadge status={selectedLoan.approvalStatus} />
+                  <StatusBadge status={currentLoan.approvalStatus} />
                 </div>
                 <div className="flex justify-between py-3 border-b border-[#CDCDCD]">
                   <span className="text-[#00000080] text-sm">
                     Approval Date
                   </span>
                   <span className="font-medium text-sm text-right">
-                    {selectedLoan.approvalDate}
+                    {currentLoan.approvalDate}
                   </span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-[#CDCDCD]">
                   <span className="text-[#00000080] text-sm">
                     Disbursement Status
                   </span>
-                  <StatusBadge status={selectedLoan.disbursementStatus} />
+                  <StatusBadge status={currentLoan.disbursementStatus} />
                 </div>
                 <div className="flex justify-between py-3">
                   <span className="text-[#00000080] text-sm">
                     Disbursement Date
                   </span>
                   <span className="font-medium text-sm text-right">
-                    {selectedLoan.disbursementDate}
+                    {currentLoan.disbursementDate}
                   </span>
                 </div>
               </div>
@@ -338,15 +515,15 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
 
             <button
               className={`w-full py-3 rounded-full font-medium my-5 transition-colors cursor-pointer ${
-                selectedLoan.disbursementStatus === "Completed"
+                currentLoan.disbursementStatus === "Completed"
                   ? "bg-[#939FC7] text-white cursor-not-allowed"
                   : "bg-[#273E8E] hover:bg-blue-700 text-white"
               }`}
               onClick={() =>
-                selectedLoan.disbursementStatus !== "Completed" &&
+                currentLoan.disbursementStatus !== "Completed" &&
                 setShowDisburseModal(true)
               }
-              disabled={selectedLoan.disbursementStatus === "Completed"}
+              disabled={currentLoan.disbursementStatus === "Completed"}
             >
               Disburse Loan
             </button>
@@ -423,18 +600,31 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
                     <div className="text-sm font-medium">
                       Download Account Statement
                     </div>
-                    <div className="text-xs text-gray-500">200kb</div>
+                    <div className="text-xs text-gray-500">
+                      {isDownloading ? "Generating PDF..." : "PDF • 200kb"}
+                    </div>
                   </div>
                 </div>
-                <button className="text-blue-600">
+                <button 
+                  className={`text-blue-600 hover:text-blue-800 transition-colors ${
+                    isDownloading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+                  }`}
+                  onClick={handleDownloadStatement}
+                  disabled={isDownloading}
+                  title="Download Account Statement"
+                >
                   <div className="download-icon">
-                    <img
-                      src="/assets/images/download.png"
-                      alt="Download"
-                      width="24"
-                      height="24"
-                      className="object-contain"
-                    />
+                    {isDownloading ? (
+                      <div className="w-6 h-6 animate-spin rounded-full border-2 border-blue-600 border-t-transparent"></div>
+                    ) : (
+                      <img
+                        src="/assets/images/download.png"
+                        alt="Download"
+                        width="24"
+                        height="24"
+                        className="object-contain"
+                      />
+                    )}
                   </div>
                 </button>
               </div>
@@ -448,7 +638,7 @@ const FullLoanDetail: React.FC<FullLoanDetailProps> = ({
         isOpen={showDisburseModal}
         onClose={() => setShowDisburseModal(false)}
         loanId={loanId}
-        amount={selectedLoan.loanAmount}
+        amount={currentLoan.loanAmount}
         onDisburse={handleDisburse}
       />
     </div>

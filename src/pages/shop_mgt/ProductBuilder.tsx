@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import AddCustomService from './AddCustomService';
+import images from '../../constants/images';
 
 interface Product {
   id: string;
@@ -95,18 +96,17 @@ const ProductBuilder = ({ isOpen, onClose }: ProductBuilderProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex items-start justify-end z-50">
-      <div className="bg-white rounded-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 backdrop-brightness-50 bg-opacity-50 flex items-start justify-end z-50">
+      <div className="bg-white rounded-lg w-full max-w-md max-h-[100vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className="text-lg font-semibold text-gray-900">Product Builder</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50"
+            className="w-8 h-8 flex items-center justify-center rounded-full  cursor-pointer"
+           
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+          <img src={images.cross} className="w-7 h-7" alt="" />
           </button>
         </div>
 
@@ -227,7 +227,7 @@ const ProductBuilder = ({ isOpen, onClose }: ProductBuilderProps) => {
             <button 
               type="button"
               onClick={handleAddCustomService}
-              className="w-full py-3 px-4 border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-full transition-colors"
+              className="w-full py-3 px-4 cursor-pointer border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-full transition-colors"
             >
               Add Custom Service
             </button>
@@ -237,7 +237,7 @@ const ProductBuilder = ({ isOpen, onClose }: ProductBuilderProps) => {
             <button 
               type="button"
               onClick={handleCreateBundle}
-              className="w-full py-3 px-4 bg-blue-900 hover:bg-blue-900 text-white font-medium rounded-full transition-colors"
+              className="w-full py-3 px-4 cursor-pointer bg-blue-900 hover:bg-blue-900 text-white font-medium rounded-full transition-colors"
             >
               Create bundle
             </button>

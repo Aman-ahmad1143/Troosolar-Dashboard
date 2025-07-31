@@ -115,7 +115,7 @@ const Referral_mgt = () => {
           <h1 className="text-2xl font-semibold text-gray-900">Referral</h1>
           <button 
             onClick={() => setIsSettingsModalOpen(true)}
-            className="bg-blue-900 hover:bg-blue-900 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors"
+            className="bg-blue-900 hover:bg-blue-900 text-white  cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-colors"
           >
             Referral Settings
           </button>
@@ -240,7 +240,7 @@ const Referral_mgt = () => {
               <h2 className="text-xl font-semibold text-gray-900">Settings</h2>
               <button
                 onClick={() => setIsSettingsModalOpen(false)}
-                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+                className="w-8 h-8 flex items-center cursor-pointer justify-center rounded-full hover:bg-gray-100 transition-colors"
               >
                 <img src={images.cross} className="w-7 h-7" alt="" />
               </button>
@@ -284,7 +284,7 @@ const Referral_mgt = () => {
               {/* Save Button */}
               <button
                 onClick={handleSaveSettings}
-                className="w-full bg-blue-900 hover:bg-blue-800 text-white py-3 px-4 rounded-full text-sm font-medium transition-colors mt-8"
+                className="w-full bg-blue-900 cursor-pointer hover:bg-blue-800 text-white py-3 px-4 rounded-full text-sm font-medium transition-colors mt-8"
               >
                 Save
               </button>
