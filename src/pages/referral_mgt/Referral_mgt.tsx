@@ -1,24 +1,27 @@
-import { useState, useEffect } from 'react';
-import { referralData, sortOptions, type ReferralData } from './referral';
-import Header from '../../component/Header';
+import { useState, useEffect } from "react";
+import { referralData, sortOptions, type ReferralData } from "./referral";
+import Header from "../../component/Header";
 import images from "../../constants/images";
 
 const Referral_mgt = () => {
   const [selectedReferrals, setSelectedReferrals] = useState<string[]>([]);
-  const [sortBy, setSortBy] = useState('default');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState("default");
+  const [searchTerm, setSearchTerm] = useState("");
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-  const [commissionPercentage, setCommissionPercentage] = useState('');
-  const [minimumWithdrawal, setMinimumWithdrawal] = useState('');
+  const [commissionPercentage, setCommissionPercentage] = useState("");
+  const [minimumWithdrawal, setMinimumWithdrawal] = useState("");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
 
   // Load settings from localStorage on component mount
   useEffect(() => {
-    const savedSettings = localStorage.getItem('referralSettings');
+    const savedSettings = localStorage.getItem("referralSettings");
     if (savedSettings) {
-      const { commissionPercentage: savedCommission, minimumWithdrawal: savedMinimum } = JSON.parse(savedSettings);
-      setCommissionPercentage(savedCommission || '');
-      setMinimumWithdrawal(savedMinimum || '');
+      const {
+        commissionPercentage: savedCommission,
+        minimumWithdrawal: savedMinimum,
+      } = JSON.parse(savedSettings);
+      setCommissionPercentage(savedCommission || "");
+      setMinimumWithdrawal(savedMinimum || "");
     }
   }, []);
 
@@ -27,7 +30,7 @@ const Referral_mgt = () => {
     const handleClickOutside = (event: MouseEvent) => {
       if (isSortDropdownOpen) {
         const target = event.target as Element;
-        const sortDropdown = document.querySelector('.sort-dropdown');
+        const sortDropdown = document.querySelector(".sort-dropdown");
         if (sortDropdown && !sortDropdown.contains(target)) {
           setIsSortDropdownOpen(false);
         }
@@ -35,26 +38,26 @@ const Referral_mgt = () => {
     };
 
     if (isSortDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSortDropdownOpen]);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedReferrals(referralData.map(referral => referral.id));
+      setSelectedReferrals(referralData.map((referral) => referral.id));
     } else {
       setSelectedReferrals([]);
     }
   };
 
   const handleSelectReferral = (referralId: string) => {
-    setSelectedReferrals(prev => 
-      prev.includes(referralId) 
-        ? prev.filter(id => id !== referralId)
+    setSelectedReferrals((prev) =>
+      prev.includes(referralId)
+        ? prev.filter((id) => id !== referralId)
         : [...prev, referralId]
     );
   };
@@ -67,21 +70,21 @@ const Referral_mgt = () => {
   const handleSaveSettings = () => {
     // Validate input
     if (!commissionPercentage.trim() || !minimumWithdrawal.trim()) {
-      alert('Please fill in both fields before saving.');
+      alert("Please fill in both fields before saving.");
       return;
     }
 
     // Validate commission percentage is a number
     const commissionNum = parseFloat(commissionPercentage);
     if (isNaN(commissionNum) || commissionNum < 0 || commissionNum > 100) {
-      alert('Please enter a valid commission percentage between 0 and 100.');
+      alert("Please enter a valid commission percentage between 0 and 100.");
       return;
     }
 
     // Validate minimum withdrawal is a number
-    const withdrawalNum = parseFloat(minimumWithdrawal.replace(/,/g, ''));
+    const withdrawalNum = parseFloat(minimumWithdrawal.replace(/,/g, ""));
     if (isNaN(withdrawalNum) || withdrawalNum < 0) {
-      alert('Please enter a valid minimum withdrawal amount.');
+      alert("Please enter a valid minimum withdrawal amount.");
       return;
     }
 
@@ -89,38 +92,38 @@ const Referral_mgt = () => {
     const settings = {
       commissionPercentage: commissionPercentage.trim(),
       minimumWithdrawal: minimumWithdrawal.trim(),
-      lastUpdated: new Date().toISOString()
+      lastUpdated: new Date().toISOString(),
     };
-    
-    localStorage.setItem('referralSettings', JSON.stringify(settings));
-    
+
+    localStorage.setItem("referralSettings", JSON.stringify(settings));
+
     // Show success message
-    alert('Settings saved successfully!');
-    
+    alert("Settings saved successfully!");
+
     // Close modal
     setIsSettingsModalOpen(false);
   };
 
-  const filteredReferrals = referralData.filter(referral =>
+  const filteredReferrals = referralData.filter((referral) =>
     referral.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div className="min-h-screen bg-[#F5F7FF]">
       <Header />
-      
+
       <div className="p-6">
         {/* Header Section with Title and Settings Button */}
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-semibold text-gray-900">Referral</h1>
-          <button 
+          <button
             onClick={() => setIsSettingsModalOpen(true)}
-            className="bg-blue-900 hover:bg-blue-900 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors"
+            className="bg-blue-900 hover:bg-blue-900 text-white px-5 py-3 rounded-full text-sm font-medium transition-colors cursor-pointer"
           >
             Referral Settings
           </button>
         </div>
-        
+
         {/* Controls Section */}
         <div className="flex items-center justify-between mb-6">
           {/* Sort Dropdown */}
@@ -130,7 +133,8 @@ const Referral_mgt = () => {
                 onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
                 className="inline-flex justify-between w-48 cursor-pointer rounded-md border border-[#00000080] bg-white px-4 py-2 text-sm font-medium text-black shadow-sm focus:outline-none"
               >
-                {sortOptions.find(option => option.value === sortBy)?.label || 'Sort by'}
+                {sortOptions.find((option) => option.value === sortBy)?.label ||
+                  "Sort by"}
                 <img src={images.arrow} alt="" />
               </button>
             </div>
@@ -194,37 +198,54 @@ const Referral_mgt = () => {
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                     />
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-black">Name</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-black">No of referral</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-black">Amount Earned</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-black">Date joined</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-black">
+                    Name
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-black">
+                    No of referral
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-black">
+                    Amount Earned
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-black">
+                    Date joined
+                  </th>
                 </tr>
               </thead>
 
               {/* Table Body */}
               <tbody className="divide-y divide-gray-200">
-                {filteredReferrals.map((referral: ReferralData,index:number) => (
-                  <tr key={referral.id} 
-
-                  className={`${
-                      index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
-                    } transition-colors border-b border-gray-100 last:border-b-0`}
-
-                  >
-                    <td className="px-6 py-4  ">
-                      <input
-                        type="checkbox"
-                        checked={selectedReferrals.includes(referral.id)}
-                        onChange={() => handleSelectReferral(referral.id)}
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-                      />
-                    </td>
-                    <td className="px-6 py-4 text-sm text-black">{referral.name}</td>
-                    <td className="px-6 py-4 text-sm text-black">{referral.noOfReferral}</td>
-                    <td className="px-6 py-4 text-sm text-black">{referral.amountEarned}</td>
-                    <td className="px-6 py-4 text-sm text-black">{referral.dateJoined}</td>
-                  </tr>
-                ))}
+                {filteredReferrals.map(
+                  (referral: ReferralData, index: number) => (
+                    <tr
+                      key={referral.id}
+                      className={`${
+                        index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
+                      } transition-colors border-b border-gray-100 last:border-b-0`}
+                    >
+                      <td className="px-6 py-4  ">
+                        <input
+                          type="checkbox"
+                          checked={selectedReferrals.includes(referral.id)}
+                          onChange={() => handleSelectReferral(referral.id)}
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                        />
+                      </td>
+                      <td className="px-6 py-4 text-sm text-black">
+                        {referral.name}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-black">
+                        {referral.noOfReferral}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-black">
+                        {referral.amountEarned}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-black">
+                        {referral.dateJoined}
+                      </td>
+                    </tr>
+                  )
+                )}
               </tbody>
             </table>
           </div>
@@ -240,7 +261,7 @@ const Referral_mgt = () => {
               <h2 className="text-xl font-semibold text-gray-900">Settings</h2>
               <button
                 onClick={() => setIsSettingsModalOpen(false)}
-                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer transition-colors"
               >
                 <img src={images.cross} className="w-7 h-7" alt="" />
               </button>
@@ -284,7 +305,7 @@ const Referral_mgt = () => {
               {/* Save Button */}
               <button
                 onClick={handleSaveSettings}
-                className="w-full bg-blue-900 hover:bg-blue-800 text-white py-3 px-4 rounded-full text-sm font-medium transition-colors mt-8"
+                className="w-full bg-blue-900 hover:bg-blue-800 text-white py-3 px-4 rounded-full text-sm font-medium transition-colors mt-8 cursor-pointer"
               >
                 Save
               </button>
