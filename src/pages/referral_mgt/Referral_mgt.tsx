@@ -118,7 +118,7 @@ const Referral_mgt = () => {
           <h1 className="text-2xl font-semibold text-gray-900">Referral</h1>
           <button
             onClick={() => setIsSettingsModalOpen(true)}
-            className="bg-blue-900 hover:bg-blue-900 text-white cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-colors"
+            className="bg-blue-900 hover:bg-blue-900 text-white cursor-pointer px-5 py-3 rounded-full text-sm font-medium transition-colors"
           >
             Referral Settings
           </button>
@@ -190,7 +190,7 @@ const Referral_mgt = () => {
               {/* Table Header */}
               <thead className="bg-[#EBEBEB] border-b border-gray-200">
                 <tr>
-                  <th className="px-6 py-4 text-left">
+                  <th className="px-6 py-4 text-center">
                     <input
                       type="checkbox"
                       checked={selectedReferrals.length === referralData.length}
@@ -198,16 +198,16 @@ const Referral_mgt = () => {
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                     />
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-black">
+                  <th className="px-6 py-4 text-center text-sm font-medium text-black">
                     Name
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-black">
+                  <th className="px-6 py-4 text-center text-sm font-medium text-black">
                     No of referral
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-black">
+                  <th className="px-6 py-4 text-center text-sm font-medium text-black">
                     Amount Earned
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-black">
+                  <th className="px-6 py-4 text-center text-sm font-medium text-black">
                     Date joined
                   </th>
                 </tr>
@@ -223,7 +223,7 @@ const Referral_mgt = () => {
                         index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
                       } transition-colors border-b border-gray-100 last:border-b-0`}
                     >
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-4 text-center">
                         <input
                           type="checkbox"
                           checked={selectedReferrals.includes(referral.id)}
@@ -231,16 +231,16 @@ const Referral_mgt = () => {
                           className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                         />
                       </td>
-                      <td className="px-6 py-4 text-sm text-black">
+                      <td className="px-6 py-4 text-sm text-black text-center">
                         {referral.name}
                       </td>
-                      <td className="px-6 py-4 text-sm text-black">
+                      <td className="px-6 py-4 text-sm text-black text-center">
                         {referral.noOfReferral}
                       </td>
-                      <td className="px-6 py-4 text-sm text-black">
+                      <td className="px-6 py-4 text-sm text-black text-center">
                         {referral.amountEarned}
                       </td>
-                      <td className="px-6 py-4 text-sm text-black">
+                      <td className="px-6 py-4 text-sm text-black text-center">
                         {referral.dateJoined}
                       </td>
                     </tr>
@@ -261,7 +261,7 @@ const Referral_mgt = () => {
               <h2 className="text-xl font-semibold text-gray-900">Settings</h2>
               <button
                 onClick={() => setIsSettingsModalOpen(false)}
-                className="w-8 h-8 flex items-center cursor-pointer justify-center rounded-full hover:bg-gray-100 transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer transition-colors"
               >
                 <img src={images.cross} className="w-7 h-7" alt="" />
               </button>

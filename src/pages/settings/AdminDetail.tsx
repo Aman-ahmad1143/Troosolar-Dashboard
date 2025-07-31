@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { allAdminsData } from './admin.ts';
-import EditProfile from './EditProfile.tsx';
+import { useState } from "react";
+import { allAdminsData } from "./admin.ts";
+import EditProfile from "./EditProfile.tsx";
 
 interface AdminDetailProps {
   adminId: string;
@@ -9,10 +9,10 @@ interface AdminDetailProps {
 
 const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
-  
+
   // Find the admin by ID
-  const admin = allAdminsData.find(admin => admin.id === adminId);
-  
+  const admin = allAdminsData.find((admin) => admin.id === adminId);
+
   if (!admin) {
     return (
       <div className="w-full p-8">
@@ -20,7 +20,7 @@ const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
           <p className="text-gray-500">Admin not found</p>
           <button
             onClick={onGoBack}
-            className="mt-4 bg-[#273E8E] text-white px-6 py-2 rounded-lg hover:bg-[#1f2f7a] transition-colors"
+            className="mt-4 bg-[#273E8E] text-white px-6 py-2 rounded-lg hover:bg-[#1f2f7a] transition-colors cursor-pointer"
           >
             Go Back
           </button>
@@ -41,7 +41,9 @@ const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
     <div className="w-full">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-2">Admin {admin.surname}</h1>
+        <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+          Admin {admin.surname}
+        </h1>
         <button
           onClick={onGoBack}
           className="text-[#273E8E] text-sm hover:underline flex items-center space-x-1"
@@ -51,38 +53,43 @@ const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
       </div>
 
       {/* Admin Profile Card */}
-      <div 
+      <div
         className="bg-gradient-to-r from-[#4e4376]  to-[#f9d423] rounded-lg mb-6 relative"
-        style={{ 
-          width: '100%',
-          maxWidth: '1209px',
-          height: '491px',
-          margin: '0 auto'
+        style={{
+          width: "100%",
+          maxWidth: "1209px",
+          height: "491px",
+          margin: "0 auto",
         }}
       >
         <div className="absolute inset-0 p-12 flex">
           {/* Left Section - Profile Card */}
-          <div className="bg-gradient-to-br from-[#5D72C2] to-[#FFA50080] bg-opacity-20 border border-[#FFA126] border-opacity-30 rounded-lg p-8 flex flex-col items-center justify-center" style={{ width: '310px', height: '100%' }}>
+          <div
+            className="bg-gradient-to-br from-[#5D72C2] to-[#FFA50080] bg-opacity-20 border border-[#FFA126] border-opacity-30 rounded-lg p-8 flex flex-col items-center justify-center"
+            style={{ width: "310px", height: "100%" }}
+          >
             <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white mb-6">
-              <img 
+              <img
                 src="/assets/images/profile.png"
-                alt="Admin Profile" 
+                alt="Admin Profile"
                 className="w-full h-full object-cover"
               />
             </div>
             <h2 className="text-[#FFFFFF] text-2xl font-medium mb-2 text-center">
               {admin.surname} {admin.firstName}
             </h2>
-            <p className="text-[#FFFFFF] text-xs opacity-90 mb-20 text-center">{admin.email}</p>
-            
-            <button 
+            <p className="text-[#FFFFFF] text-xs opacity-90 mb-20 text-center">
+              {admin.email}
+            </p>
+
+            <button
               onClick={handleEditProfile}
-              className="bg-white text-gray-800 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors w-full max-w-2xl"
+              className="bg-white text-gray-800 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors w-full max-w-2xl cursor-pointer"
             >
               Edit Profile
             </button>
           </div>
-          
+
           {/* Right Section - Details */}
           <div className="flex-1 ml-12 flex justify-between">
             {/* Middle Column - Personal Details */}
@@ -104,7 +111,7 @@ const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
                 <p className="text-lg font-medium">{admin.password}</p>
               </div>
             </div>
-            
+
             {/* Right Column - BVN and Delete Admin Button */}
             <div className="text-white text-right flex flex-col justify-between">
               <div>
@@ -112,7 +119,7 @@ const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
                 <p className="text-lg font-medium">{admin.bvn}</p>
               </div>
 
-              <button className="bg-[#FFFFFF] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#FFFFFF] transition-colors">
+              <button className="bg-[#FFFFFF] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#FFFFFF] transition-colors cursor-pointer">
                 Delete Admin
               </button>
             </div>
@@ -124,21 +131,29 @@ const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
       <div className="mt-12 px-2">
         <div className="mb-8">
           {/* Tab Group Container */}
-          <div className="bg-white rounded-full p-1 shadow-sm border border-gray-200 flex" style={{ width: '200px', height: '45px' }}>
-            <button className="px-4 py-1 text-xs rounded-full font-medium transition-colors flex-1 bg-[#273E8E] text-white shadow-sm">
+          <div
+            className="bg-white rounded-full p-2 shadow-sm border border-[#CDCDCD] flex"
+            style={{ width: "235px", height: "60px" }}
+          >
+            <button className="px-5 py-2 text-md rounded-full font-medium transition-colors flex-1 bg-[#273E8E] text-white shadow-sm cursor-pointer">
               Activity
             </button>
-            <button className="px-4 py-1 text-xs rounded-full font-medium transition-colors flex-1 text-gray-600 hover:text-gray-800">
+            <button className="px-5 py-2 text-sm rounded-full font-medium transition-colors flex-1 text-gray-600 hover:text-gray-800 cursor-pointer">
               All Admins
             </button>
           </div>
-          
+
           {/* More Actions Row */}
           <div className="mt-4">
             <button className="bg-white text-gray-600 px-6 py-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors flex items-center space-x-2 shadow-sm">
               <span>More Actions</span>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-                <path d="M2 4l4 4 4-4"/>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="currentColor"
+              >
+                <path d="M2 4l4 4 4-4" />
               </svg>
             </button>
           </div>
@@ -146,37 +161,56 @@ const AdminDetail = ({ adminId, onGoBack }: AdminDetailProps) => {
 
         {/* Activity Table */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-          <div className="bg-[#EBEBEB] px-6 py-4 border-b border-gray-200">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-4">
-                <input 
-                  type="checkbox" 
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" 
-                />
-                <div className="font-medium text-gray-700 text-sm">Activity</div>
-              </div>
-              <div className="font-medium text-gray-700 text-sm text-center">Date</div>
-            </div>
-          </div>
-          <div className="divide-y divide-gray-100">
-            {admin.activity.map((activity) => (
-              <div key={activity.id} 
-              className="px-6 py-4 hover:bg-gray-50 transition-colors">
-                <div className="flex justify-between items-center">
+          <table className="min-w-full divide-y divide-gray-200">
+            {/* Table Head */}
+            <thead className="bg-[#EBEBEB]">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-4 text-left text-sm font-medium text-black"
+                >
                   <div className="flex items-center space-x-4">
-                    <input 
-                      type="checkbox" 
-                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" 
+                    <input
+                      type="checkbox"
+                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                     />
-                    <span className="text-gray-800 text-sm">{activity.description}</span>
+                    <span>Activity</span>
                   </div>
-                  <div className="text-gray-600 text-sm text-center">
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-4 text-right text-sm font-medium text-black"
+                >
+                  Date
+                </th>
+              </tr>
+            </thead>
+
+            {/* Table Body */}
+            <tbody className="bg-white divide-y divide-gray-100">
+              {admin.activity.map((activity, index) => (
+                <tr
+                  key={activity.id}
+                  className={`${
+                    index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
+                  } transition-colors border-b border-gray-100 last:border-b-0`}
+                >
+                  <td className="px-6 py-4 text-sm text-gray-800">
+                    <div className="flex items-center space-x-4">
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      />
+                      <span>{activity.description}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 text-right">
                     {activity.date}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
