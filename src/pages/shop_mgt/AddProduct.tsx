@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import images from "../../constants/images";
 
 interface AddProductProps {
   isOpen: boolean;
@@ -77,18 +78,15 @@ const AddProduct = ({ isOpen, onClose }: AddProductProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex items-start justify-end z-[60]">
-      <div className="bg-white rounded-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 backdrop-brightness-50 bg-opacity-50 flex items-start justify-end z-[60]">
+      <div className="bg-white rounded-lg w-full max-w-md max-h-[100vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className="text-lg font-semibold text-gray-900">Add Product</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-50"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <img src={images.cross} className="w-7 h-7" alt="" />
           </button>
         </div>
 
@@ -162,7 +160,7 @@ const AddProduct = ({ isOpen, onClose }: AddProductProps) => {
               <select
                 value={productCategory}
                 onChange={(e) => setProductCategory(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                className="w-full cursor-pointer px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
               >
                 <option value="">Select Category</option>
                 <option value="solar-panels">Solar Panels</option>
@@ -311,7 +309,7 @@ const AddProduct = ({ isOpen, onClose }: AddProductProps) => {
                 onChange={(e) => setSaveAsTemplate(e.target.checked)}
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
-              <span className="ml-2 text-sm text-gray-700">Mark as Top deal</span>
+              <span className="ml-2 text-sm cursor-pointer text-gray-700">Mark as Top deal</span>
             </label>
             
             <label className="flex items-center">
@@ -321,7 +319,7 @@ const AddProduct = ({ isOpen, onClose }: AddProductProps) => {
                 onChange={(e) => setMarkAsComplimentary(e.target.checked)}
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
-              <span className="ml-2 text-sm text-gray-700">Mark Installation as complimentary</span>
+              <span className="ml-2 text-sm cursor-pointer text-gray-700">Mark Installation as complimentary</span>
             </label>
           </div>
 
@@ -329,7 +327,7 @@ const AddProduct = ({ isOpen, onClose }: AddProductProps) => {
           <div className="mt-6">
             <button 
               onClick={handleSubmit}
-              className="w-full py-3 px-4 bg-blue-900 hover:bg-blue-900 text-white font-medium rounded-full transition-colors"
+              className="w-full py-3 px-4 bg-blue-900 cursor-pointer hover:bg-blue-900 text-white font-medium rounded-full transition-colors"
             >
               Add Product
             </button>

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import type { ProductData } from './shpmgt';
 
+import images from '../../constants/images';
+
+
 interface ProductDetailsProps {
   isOpen: boolean;
   onClose: () => void;
@@ -20,18 +23,16 @@ const ProductDetails = ({ isOpen, onClose, product }: ProductDetailsProps) => {
   ];
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex items-end justify-end z-50 p-4">
+    <div className="fixed inset-0 backdrop-brightness-50 bg-opacity-50 flex items-start justify-end z-50 p-4">
       <div className="bg-white rounded-2xl max-w-sm w-full max-h-[95vh] overflow-y-auto shadow-xl">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900">Product Details</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-full  cursor-pointer"
           >
-            <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+           <img src={images.cross} className="w-7 h-7" alt="" />
           </button>
         </div>
 
@@ -90,10 +91,10 @@ const ProductDetails = ({ isOpen, onClose, product }: ProductDetailsProps) => {
 
           {/* Action Buttons */}
           <div className="flex gap-3 mb-4">
-            <button className="flex-1 bg-gray-100 text-gray-700 py-2.5 px-4 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors">
+            <button className="flex-1 bg-gray-100 text-gray-700  cursor-pointer py-2.5 px-4 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors">
               Edit Product
             </button>
-            <button className="flex-1 bg-red-600 text-white py-2.5 px-4 rounded-full text-sm font-medium hover:bg-red-600 transition-colors">
+            <button className="flex-1 bg-red-600 text-white cursor-pointer py-2.5 px-4 rounded-full text-sm font-medium hover:bg-red-600 transition-colors">
               Delete Product
             </button>
           </div>
@@ -103,7 +104,7 @@ const ProductDetails = ({ isOpen, onClose, product }: ProductDetailsProps) => {
             <div className="flex">
               <button
                 onClick={() => setActiveTab('details')}
-                className={`py-2 px-4 text-sm font-medium border-b-2 transition-colors ${
+                className={`py-2 px-4 text-sm cursor-pointer font-medium border-b-2 transition-colors ${
                   activeTab === 'details'
                     ? 'border-blue-500 text-blue-600 bg-blue-50'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
@@ -113,7 +114,7 @@ const ProductDetails = ({ isOpen, onClose, product }: ProductDetailsProps) => {
               </button>
               <button
                 onClick={() => setActiveTab('reviews')}
-                className={`py-2 px-4 text-sm font-medium border-b-2 transition-colors ${
+                className={`py-2 px-4 text-sm cursor-pointer font-medium border-b-2 transition-colors ${
                   activeTab === 'reviews'
                     ? 'border-blue-500 text-blue-600 bg-blue-50'
                     : 'border-transparent text-gray-500 hover:text-gray-700'

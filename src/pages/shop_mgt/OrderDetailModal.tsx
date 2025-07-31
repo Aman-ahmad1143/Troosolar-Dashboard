@@ -14,11 +14,8 @@ const OrderDetailModal = ({
 }: OrderDetailModalProps) => {
   if (!isOpen || !order) return null;
 
-  // Convert amount string to number for calculations
-  const amountNumber = parseInt(order.amount.replace(/[N,]/g, ""));
-
   return (
-    <div className="fixed inset-0 backdrop-blur-sm flex items-end justify-end z-50 p-4">
+    <div className="fixed inset-0 backdrop-brightness-50 flex items-end justify-end z-50 p-4">
       <div className="bg-white rounded-lg w-full max-w-md max-h-[90vh] overflow-hidden shadow-xl">
         {/* Modal Header */}
         <div className="flex justify-between items-center p-4 border-b border-gray-200 bg-white sticky top-0 z-10">
@@ -257,7 +254,7 @@ const OrderDetailModal = ({
                 </h3>
                 <div className="border border-[#00000080] rounded-2xl p-3">
                   <div className="border-2 border-dashed border-[#273E8E] rounded-lg p-3 bg-[#273E8E1A] mb-5">
-                    <p className="text-xs text-gray-600 text-[#273E8E] text-[14px]">
+                    <p className="text-xs text-[#273E8E] text-[14px]">
                       Installation will be carried one of our skilled <br />
                       technician , you can choose not to use our installers
                     </p>
@@ -284,7 +281,7 @@ const OrderDetailModal = ({
                 </h3>
                 <div className="border border-[#00000080] rounded-2xl p-3">
                   <div className="border-2 border-dashed border-[#273E8E] rounded-lg p-3 bg-[#273E8E1A] mb-5">
-                    <p className="text-xs text-gray-600 text-[#273E8E] text-[14px]">
+                    <p className="text-xs text-[#273E8E] text-[14px]">
                       Installation will be carried one of our skilled <br />
                       technician , you can choose not to use our installers
                     </p>
@@ -311,7 +308,7 @@ const OrderDetailModal = ({
                 </h3>
                 <div className="border border-[#00000080] rounded-2xl p-3">
                   <div className="border-2 border-dashed border-[#273E8E] rounded-lg p-3 bg-[#273E8E1A] mb-5">
-                    <p className="text-xs text-gray-600 text-[#273E8E] text-[14px]">
+                    <p className="text-xs text-[#273E8E] text-[14px]">
                       Installation will be carried one of our skilled <br />
                       technician , you can choose not to use our installers
                     </p>

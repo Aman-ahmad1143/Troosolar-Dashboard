@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import images from '../../constants/images';
+import images from "../../constants/images";
 
 interface EditProfileProps {
   isOpen: boolean;
@@ -41,7 +41,7 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex items-start justify-end z-50">
+    <div className="fixed inset-0 backdrop-brightness-50 bg-opacity-50 flex items-start justify-end z-50">
       <div 
         className="bg-white rounded-lg relative overflow-hidden"
         style={{ 
@@ -55,9 +55,9 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
           <h2 className="text-xl font-semibold text-gray-900">Edit Profile</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer transition-colors"
+            className="w-8 h-8 flex items-center cursor-pointer justify-center rounded-full hover:bg-gray-100 transition-colors"
           >
-            <img src={images.cross} alt="" />
+            <img src={images.cross} className="w-7 h-7" alt="" />
           </button>
         </div>
 
@@ -160,7 +160,7 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
                   name="role"
                   value={formData.role}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-[#CDCDCD] cursor-pointer rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none appearance-none bg-white"
+                  className="w-full px-4 py-3 cursor-pointer border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none appearance-none bg-white"
                 >
                   <option value="Admin">Admin</option>
                   <option value="Super Admin">Super Admin</option>
@@ -178,7 +178,7 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
             <div className="mt-8">
               <button
                 onClick={handleSave}
-                className="w-full bg-[#273E8E] text-white py-3 rounded-full font-medium hover:bg-[#1f2f7a] transition-colors cursor-pointer"
+                className="w-full bg-[#273E8E] cursor-pointer text-white py-3 rounded-full font-medium hover:bg-[#1f2f7a] transition-colors"
               >
                 Save
               </button>

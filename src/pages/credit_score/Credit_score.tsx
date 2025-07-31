@@ -254,7 +254,7 @@ const Credit_score = () => {
 
       {/* Credit Check Modal */}
       {showCreditModal && selectedUser && (
-        <div className="fixed inset-0 backdrop-blur-sm flex items-start justify-end z-50 p-6">
+        <div className="fixed inset-0 backdrop-brightness-50 flex items-start justify-end z-50 p-6">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg h-[95vh] overflow-hidden">
             {/* Modal Header */}
             <div className="flex justify-between items-center px-8 py-6 border-b border-gray-200">
