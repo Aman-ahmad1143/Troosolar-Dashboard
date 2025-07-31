@@ -10,25 +10,24 @@ const Analytics = () => {
   const [selectedPeriod, setSelectedPeriod] = useState("alltime");
   const [revenueProduct, setRevenueProduct] = useState("all");
 
-const StatCard = ({ title, value, className = "" }) => {
-  return (
-    <div className={`bg-white p-4 shadow-sm ${className}`}>
-      <h3
-        className="text-sm font-medium mb-3"
-        style={{ color: "#00000080", fontSize: "12px" }}
-      >
-        {title}
-      </h3>
-      <p
-        className="font-semibold"
-        style={{ color: "#000000", fontSize: "20px" }}
-      >
-        {value}
-      </p>
-    </div>
-  );
-};
-
+  const StatCard = ({ title, value, className = "" }) => {
+    return (
+      <div className={`bg-white p-4 shadow-sm ${className}`}>
+        <h3
+          className="text-sm font-medium mb-3"
+          style={{ color: "#00000080", fontSize: "12px" }}
+        >
+          {title}
+        </h3>
+        <p
+          className="font-semibold"
+          style={{ color: "#000000", fontSize: "20px" }}
+        >
+          {value}
+        </p>
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-[#F5F7FF]">
