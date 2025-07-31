@@ -69,11 +69,7 @@ const Notifications = () => {
     <div className="w-full">
       {/* Notification Types */}
       <div className="flex items-center justify-between mb-6">
-<<<<<<< HEAD
-        <div className="inline-flex bg-white rounded-full p-2 border border-gray-200">
-=======
         <div className="inline-flex bg-white rounded-full p-2 border border-[#CDCDCD]">
->>>>>>> 05cd256c506a06227369b45e1cd6834b452aaba2
           {notificationTypes.map((type) => (
             <button
               key={type.id}

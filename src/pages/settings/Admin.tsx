@@ -35,23 +35,13 @@ const Admin = () => {
   return (
     <div className="w-full bg-[#F5F7FF]">
       {/* Admin Profile Card */}
-<<<<<<< HEAD
-      <div 
-        className="bg-gradient-to-r from-[#4e4376]  to-[#f9d423] rounded-lg mb-6 relative"
-        style={{ 
-          width: '100%',
-          maxWidth: '1209px',
-          height: '491px',
-          margin: '0 auto'
-=======
       <div
-        className="bg-gradient-to-br from-[#273E8E]  to-[#FFA500] rounded-lg mb-6 relative"
+        className="bg-gradient-to-r from-[#4e4376] to-[#f9d423] rounded-lg mb-6 relative"
         style={{
           width: "100%",
           maxWidth: "1209px",
           height: "491px",
           margin: "0 auto",
->>>>>>> 05cd256c506a06227369b45e1cd6834b452aaba2
         }}
       >
         <div className="absolute inset-0 p-12 flex">
@@ -76,11 +66,7 @@ const Admin = () => {
 
             <button
               onClick={handleEditProfile}
-<<<<<<< HEAD
-              className="bg-white text-gray-900 px-8 py-3 rounded-full font-semibold transition-colors w-full max-w-2xl"
-=======
-              className="bg-white text-black px-10 py-4 rounded-full font-sm hover:bg-gray-100 transition-colors w-full max-w-2xl cursor-pointer"
->>>>>>> 05cd256c506a06227369b45e1cd6834b452aaba2
+              className="bg-white text-gray-900 px-8 py-3 rounded-full font-semibold transition-colors w-full max-w-2xl cursor-pointer"
             >
               Edit Profile
             </button>
@@ -115,11 +101,7 @@ const Admin = () => {
                 <p className="text-lg font-medium">{adminData.bvn}</p>
               </div>
 
-<<<<<<< HEAD
-              <button className="bg-white text-[#000000] px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-=======
-              <button className="bg-white text-[#000000] px-6 py-3 rounded-full font-sm cursor-pointer hover:bg-gray-100 transition-colors">
->>>>>>> 05cd256c506a06227369b45e1cd6834b452aaba2
+              <button className="bg-white text-[#000000] px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors cursor-pointer">
                 Add new Admin
               </button>
             </div>
@@ -131,17 +113,10 @@ const Admin = () => {
       <div className="mt-12 px-2">
         <div className="mb-8">
           {/* Tab Group Container */}
-<<<<<<< HEAD
           <div className="bg-white rounded-full p-2 shadow-sm border border-gray-200 flex" style={{ width: '200px', height: '45px' }}>
-=======
-          <div
-            className="bg-white rounded-full p-2 shadow-sm border border-[#CDCDCD] flex"
-            style={{ width: "240px", height: "60px" }}
-          >
->>>>>>> 05cd256c506a06227369b45e1cd6834b452aaba2
             <button
               onClick={() => setActiveTab("activity")}
-              className={`px-5 py-2.5 text-sm rounded-full font-medium transition-colors flex-1 cursor-pointer ${
+              className={`px-4 py-1 text-xs rounded-full font-medium transition-colors flex-1 cursor-pointer ${
                 activeTab === "activity"
                   ? "bg-[#273E8E] text-white shadow-sm"
                   : "text-gray-600 hover:text-gray-800"
@@ -151,7 +126,7 @@ const Admin = () => {
             </button>
             <button
               onClick={() => setActiveTab("allAdmins")}
-              className={`px-5 py-2.5 text-sm rounded-full font-medium transition-colors flex-1 cursor-pointer ${
+              className={`px-4 py-1 text-xs rounded-full font-medium transition-colors flex-1 cursor-pointer ${
                 activeTab === "allAdmins"
                   ? "bg-[#273E8E] text-white shadow-sm"
                   : "text-gray-600 hover:text-gray-800"
@@ -163,7 +138,7 @@ const Admin = () => {
 
           {/* More Actions and Search Row */}
           <div className="mt-4 flex justify-between items-center">
-            <button className="bg-white text-gray-600 px-6 py-3 rounded-lg border border-[#00000080] hover:bg-gray-50 transition-colors flex items-center space-x-2 shadow-sm cursor-pointer">
+            <button className="bg-white text-gray-600 px-6 py-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors flex items-center space-x-2 shadow-sm cursor-pointer">
               <span>More Actions</span>
               <svg
                 width="12"
@@ -183,7 +158,7 @@ const Admin = () => {
                   placeholder="Search"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-12 pr-6 py-3.5 border border-[#00000080] rounded-lg text-[15px] w-[320px] focus:outline-none bg-white shadow-[0_2px_6px_rgba(0,0,0,0.05)] placeholder-gray-400"
+                  className="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                 />
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg
@@ -208,13 +183,8 @@ const Admin = () => {
         </div>
 
         {/* Activity Table */}
-<<<<<<< HEAD
         {activeTab === 'activity' && (
-          <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
-=======
-        {activeTab === "activity" && (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
->>>>>>> 05cd256c506a06227369b45e1cd6834b452aaba2
             <div className="bg-[#EBEBEB] px-6 py-4 border-b border-gray-200">
               <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-4">
@@ -232,19 +202,11 @@ const Admin = () => {
               </div>
             </div>
             <div className="divide-y divide-gray-100">
-<<<<<<< HEAD
               {adminData.activity.map((activity, index) => (
                 <div key={activity.id} 
                 className={`px-6 py-4 ${
                       index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
                     } transition-colors border-b border-gray-100 last:border-b-0 hover:bg-gray-50`}>
-=======
-              {adminData.activity.map((activity) => (
-                <div
-                  key={activity.id}
-                  className="px-6 py-4 hover:bg-gray-50 transition-colors"
-                >
->>>>>>> 05cd256c506a06227369b45e1cd6834b452aaba2
                   <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-4">
                       <input
@@ -268,7 +230,6 @@ const Admin = () => {
         {/* All Admins Tab Content */}
         {activeTab === "allAdmins" && (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-<<<<<<< HEAD
             {/* Table Header */}
             <div className="bg-[#EBEBEB] px-6 py-4 border-b border-gray-200">
               <div className="grid grid-cols-6 gap-4 items-center">
@@ -290,97 +251,33 @@ const Admin = () => {
             {/* Table Body */}
             <div className="divide-y divide-gray-100">
               {allAdminsData.map((admin) => (
-                <div key={admin.id} 
-                className="px-6 py-4 hover:bg-gray-50 transition-colors">
-                  
+                <div key={admin.id} className="px-6 py-4 hover:bg-gray-50 transition-colors">
                   <div className="grid grid-cols-6 gap-4 items-center">
-=======
-            <table className="w-full">
-              {/* Table Header */}
-              <thead>
-                <tr className="bg-[#EBEBEB] border-b border-gray-200">
-                  <th className="px-6 py-4 text-left">
->>>>>>> 05cd256c506a06227369b45e1cd6834b452aaba2
                     <div className="flex items-center space-x-3">
                       <input
                         type="checkbox"
                         className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                       />
-                      <span className="font-medium text-black text-sm">
-                        Name
+                      <span className="text-gray-800 text-sm font-medium">
+                        {admin.firstName} {admin.surname}
                       </span>
                     </div>
-                  </th>
-                  <th className="px-6 py-4 text-center">
-                    <span className="font-medium text-black text-sm">
-                      Email
-                    </span>
-                  </th>
-                  <th className="px-6 py-4 text-center">
-                    <span className="font-medium text-black text-sm">Role</span>
-                  </th>
-                  <th className="px-6 py-4 text-center">
-                    <span className="font-medium text-black text-sm">BVN</span>
-                  </th>
-                  <th className="px-6 py-4 text-center">
-                    <span className="font-medium text-black text-sm">
-                      Date Joined
-                    </span>
-                  </th>
-                  <th className="px-6 py-4 text-center">
-                    <span className="font-medium text-black text-sm">
-                      Action
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-
-              {/* Table Body */}
-              <tbody className="divide-y divide-gray-100">
-                {allAdminsData.map((admin, index) => (
-                  <tr
-                    key={admin.id}
-                    className={`${
-                      index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
-                    } transition-colors border-b border-gray-100 last:border-b-0`}
-                  >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center space-x-3">
-                        <input
-                          type="checkbox"
-                          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                        />
-                        <span className="text-black text-sm font-medium">
-                          {admin.firstName} {admin.surname}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-center">
-                      <span className="text-black text-sm">{admin.email}</span>
-                    </td>
-                    <td className="px-6 py-4 text-center">
-                      <span className="text-black text-sm">{admin.role}</span>
-                    </td>
-                    <td className="px-6 py-4 text-center">
-                      <span className="text-black text-sm">{admin.bvn}</span>
-                    </td>
-                    <td className="px-6 py-4 text-center">
-                      <span className="text-black text-sm">
-                        {admin.dateJoined}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-center">
+                    <div className="text-gray-600 text-sm">{admin.email}</div>
+                    <div className="text-gray-600 text-sm">{admin.role}</div>
+                    <div className="text-gray-600 text-sm">{admin.bvn}</div>
+                    <div className="text-gray-600 text-sm">{admin.dateJoined}</div>
+                    <div>
                       <button
                         onClick={() => handleViewDetails(admin.id)}
-                        className="bg-[#273E8E] text-white px-5 py-3 rounded-full text-sm font-sm hover:bg-[#1f2f7a] transition-colors cursor-pointer"
+                        className="bg-[#273E8E] text-white px-4 py-2 rounded-full text-sm font-sm hover:bg-[#1f2f7a] transition-colors cursor-pointer"
                       >
                         View Details
                       </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
