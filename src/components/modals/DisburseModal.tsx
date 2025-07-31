@@ -134,14 +134,14 @@ const DisburseModal: React.FC<DisburseModalProps> = ({
         <div className="flex items-center justify-end gap-4 p-6 border-t border-gray-200">
           <button
             onClick={handleClose}
-            className="px-6 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer"
+            className="px-6 py-2 text-gray-700 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={handleDisburse}
             disabled={!selectedStatus}
-            className={`px-6 py-2 rounded-lg font-medium transition-colors cursor-pointer ${
+            className={`px-6 py-2 rounded-full font-medium transition-colors cursor-pointer ${
               selectedStatus
                 ? "bg-[#273E8E] text-white hover:bg-[#1e2f6b]"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"

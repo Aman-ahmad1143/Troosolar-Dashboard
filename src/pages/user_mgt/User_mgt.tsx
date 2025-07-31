@@ -175,8 +175,8 @@ const User_mgt: React.FC = () => {
           ))}
         </div>
 
-        <div className="mb-5" >     
-          <h1 className="font-bold text-2xl" >Users</h1>
+        <div className="mb-5">
+          <h1 className="font-bold text-2xl">Users</h1>
         </div>
 
         {/* Users Table Controls */}
@@ -369,9 +369,7 @@ const User_mgt: React.FC = () => {
               {users.map((user, idx) => (
                 <tr
                   key={idx}
-                  className={`${
-                    idx % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
-                  } `}
+                  className={`${idx % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"} `}
                 >
                   <td className="p-4 text-center">
                     <input type="checkbox" className="rounded" />
@@ -455,7 +453,7 @@ const User_mgt: React.FC = () => {
 
       {/* Add New User Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 z-50 flex justify-end h-[90vh]">
           <div
             className="fixed inset-0 backdrop-brightness-50 bg-black/30"
             onClick={() => setShowAddModal(false)}
@@ -464,25 +462,10 @@ const User_mgt: React.FC = () => {
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-2xl font-bold text-gray-800">Add New User</h2>
               <button
-                className="text-gray-500 hover:text-gray-700 transition-colors"
+                className="cursor-pointer transition-colors"
                 onClick={() => setShowAddModal(false)}
               >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="cursor-pointer"
-                >
-                  <path
-                    d="M6 18L18 6M6 6L18 18"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <img src={images.cross} alt="" className="w-8 h-8" />
               </button>
             </div>
 

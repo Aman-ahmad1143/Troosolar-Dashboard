@@ -26,6 +26,7 @@ const images = {
   maxibundle: "/assets/images/maxibundle.png",
   plus: "/assets/images/plus.svg",
   minus: "/assets/images/minus.svg",
+  Lightning: "/assets/images/Lightning.svg",
 };
 
 export default images;

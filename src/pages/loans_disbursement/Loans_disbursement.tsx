@@ -345,7 +345,7 @@ const Loans_disbursement = () => {
                 {filteredDisbursementData.map((loan, index) => (
                   <tr
                     key={loan.id}
-                   className={`${
+                    className={`${
                       index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
                     } transition-colors border-b border-gray-100 last:border-b-0`}
                   >
@@ -419,7 +419,7 @@ const Loans_disbursement = () => {
                         </button>
                         {loan.disbursement === "Pending" ? (
                           <button
-                            className="text-white px-7 py-3.5 rounded-full hover:opacity-90 transition-opacity text-xs font-medium cursor-pointer"
+                            className="text-white px-8 py-3.5 rounded-full hover:opacity-90 transition-opacity text-xs font-medium cursor-pointer"
                             style={{ backgroundColor: "#273E8E" }}
                             onClick={() => handleViewLoanDetail(loan.id)}
                           >
