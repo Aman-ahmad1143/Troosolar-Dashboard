@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import images from '../../constants/images';
 
 interface AddPartnerProps {
   isOpen: boolean;
@@ -35,17 +36,15 @@ const AddPartner = ({ isOpen, onClose, onSave }: AddPartnerProps) => {
 
   return (
     <div className="fixed inset-0 backdrop-brightness-50 bg-opacity-50 flex items-start justify-end z-50">
-      <div className="bg-white rounded-lg shadow-xl w-[550px] max-w-[90vw] max-h-[70vh] overflow-y-auto">
+      <div className="bg-white rounded-lg shadow-xl w-[550px] max-w-[90vw] max-h-[80vh] overflow-y-auto">
         {/* Modal Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-800">Add Partner</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer transition-colors"
           >
-            <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+           <img src={images.cross} alt="" />
           </button>
         </div>
 
@@ -130,7 +129,7 @@ const AddPartner = ({ isOpen, onClose, onSave }: AddPartnerProps) => {
         <div className="p-6 border-t border-gray-200">
           <button
             onClick={handleSave}
-            className="w-full bg-[#273E8E] text-white py-3 px-6 rounded-full font-medium hover:bg-[#1f2f7a] transition-colors"
+            className="w-full bg-[#273E8E] text-white py-3 px-6 rounded-full font-medium hover:bg-[#1f2f7a] transition-colors cursor-pointer"
           >
             Save
           </button>

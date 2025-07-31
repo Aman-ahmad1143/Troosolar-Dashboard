@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState } from "react";
+import images from "../../constants/images";
 
 interface NewBannerModalProps {
   isOpen: boolean;
@@ -8,7 +9,7 @@ interface NewBannerModalProps {
 
 const NewBannerModal = ({ isOpen, onClose, onSave }: NewBannerModalProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [bannerLink, setBannerLink] = useState('');
+  const [bannerLink, setBannerLink] = useState("");
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -21,14 +22,14 @@ const NewBannerModal = ({ isOpen, onClose, onSave }: NewBannerModalProps) => {
     if (selectedImage && bannerLink.trim()) {
       onSave(selectedImage, bannerLink);
       setSelectedImage(null);
-      setBannerLink('');
+      setBannerLink("");
       onClose();
     }
   };
 
   const handleClose = () => {
     setSelectedImage(null);
-    setBannerLink('');
+    setBannerLink("");
     onClose();
   };
 
@@ -40,13 +41,15 @@ const NewBannerModal = ({ isOpen, onClose, onSave }: NewBannerModalProps) => {
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-xl font-bold"
+          className="absolute top-4 right-4 cursor-pointer"
         >
-          ×
+          <img src={images.cross} alt="" />
         </button>
 
         {/* Modal Header */}
-        <h2 className="text-xl font-semibold text-gray-800 mb-6">Upload Banner</h2>
+        <h2 className="text-xl font-semibold text-gray-800 mb-6">
+          Upload Banner
+        </h2>
 
         {/* Banner Image Upload */}
         <div className="mb-4">
@@ -69,7 +72,7 @@ const NewBannerModal = ({ isOpen, onClose, onSave }: NewBannerModalProps) => {
                   </svg>
                 </div>
                 <p className="text-sm text-gray-500">
-                  {selectedImage ? selectedImage.name : 'Upload banner image'}
+                  {selectedImage ? selectedImage.name : "Upload banner image"}
                 </p>
                 {!selectedImage && (
                   <p className="text-xs text-gray-400 mt-1">
@@ -99,7 +102,7 @@ const NewBannerModal = ({ isOpen, onClose, onSave }: NewBannerModalProps) => {
         <button
           onClick={handleSave}
           disabled={!selectedImage || !bannerLink.trim()}
-          className="w-full bg-[#273E8E] text-white py-3 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="w-full bg-[#273E8E] text-white py-3 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
         >
           Save
         </button>

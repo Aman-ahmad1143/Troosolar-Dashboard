@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import NewBannerModal from './NewBannerModal';
+import { useState } from "react";
+import NewBannerModal from "./NewBannerModal";
 
 interface BannerItem {
   id: string;
@@ -16,28 +16,28 @@ interface BannerProps {
 const Banner = ({ isModalOpen = false, setIsModalOpen }: BannerProps = {}) => {
   const [bannerList, setBannerList] = useState<BannerItem[]>([
     {
-      id: '1',
+      id: "1",
       image: "/public/assets/images/banner.png", // You can replace with your actual image path
-      dateCreated: '05-07-25/07:22AM',
-      isSelected: false
+      dateCreated: "05-07-25/07:22AM",
+      isSelected: false,
     },
     {
-      id: '2',
-      image: '/public/assets/images/banner.jpg', // You can replace with your actual image path
-      dateCreated: '05-07-25/07:22AM',
-      isSelected: false
+      id: "2",
+      image: "/public/assets/images/banner.jpg", // You can replace with your actual image path
+      dateCreated: "05-07-25/07:22AM",
+      isSelected: false,
     },
     {
-      id: '3',
-      image: '/public/assets/images/banner.jpg', // You can replace with your actual image path
-      dateCreated: '05-07-25/07:22AM',
-      isSelected: false
-    }
+      id: "3",
+      image: "/public/assets/images/banner.jpg", // You can replace with your actual image path
+      dateCreated: "05-07-25/07:22AM",
+      isSelected: false,
+    },
   ]);
 
   const handleSelectBanner = (id: string) => {
-    setBannerList(prev =>
-      prev.map(banner =>
+    setBannerList((prev) =>
+      prev.map((banner) =>
         banner.id === id
           ? { ...banner, isSelected: !banner.isSelected }
           : banner
@@ -46,132 +46,140 @@ const Banner = ({ isModalOpen = false, setIsModalOpen }: BannerProps = {}) => {
   };
 
   const handleSelectAll = (checked: boolean) => {
-    setBannerList(prev =>
-      prev.map(banner => ({ ...banner, isSelected: checked }))
+    setBannerList((prev) =>
+      prev.map((banner) => ({ ...banner, isSelected: checked }))
     );
   };
 
   const handleEdit = (id: string) => {
-    console.log('Edit banner:', id);
+    console.log("Edit banner:", id);
     // Add edit functionality here
   };
 
   const handleDelete = (id: string) => {
-    setBannerList(prev => prev.filter(banner => banner.id !== id));
+    setBannerList((prev) => prev.filter((banner) => banner.id !== id));
   };
 
-  const handleNewBanner = (image: File | null, ) => {
+  const handleNewBanner = (image: File | null) => {
     if (image) {
       // Create a URL for the uploaded image (in real app, you'd upload to server)
       const imageUrl = URL.createObjectURL(image);
       const newBanner: BannerItem = {
         id: (bannerList.length + 1).toString(),
         image: imageUrl,
-        dateCreated: new Date().toLocaleDateString('en-GB', {
-          day: '2-digit',
-          month: '2-digit',
-          year: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true
-        }).replace(/\//g, '-').replace(',', '/'),
-        isSelected: false
+        dateCreated: new Date()
+          .toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          })
+          .replace(/\//g, "-")
+          .replace(",", "/"),
+        isSelected: false,
       };
-      setBannerList(prev => [...prev, newBanner]);
+      setBannerList((prev) => [...prev, newBanner]);
     }
   };
 
-  const allSelected = bannerList.every(banner => banner.isSelected);
-  const someSelected = bannerList.some(banner => banner.isSelected);
+  const allSelected = bannerList.every((banner) => banner.isSelected);
+  const someSelected = bannerList.some((banner) => banner.isSelected);
 
   return (
     <div className="w-full">
       {/* Banner Table */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        {/* Table Header */}
-        <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
-          <div className="grid grid-cols-12 gap-4 items-center">
-            <div className="col-span-1">
-              <input
-                type="checkbox"
-                checked={allSelected}
-                ref={input => {
-                  if (input) input.indeterminate = someSelected && !allSelected;
-                }}
-                onChange={(e) => handleSelectAll(e.target.checked)}
-                className="w-4 h-4 text-[#273E8E] bg-gray-100 border-gray-300 rounded focus:ring-[#273E8E] focus:ring-2"
-              />
-            </div>
-            <div className="col-span-6">
-              <span className="text-sm font-medium text-gray-700">Banner Image</span>
-            </div>
-            <div className="col-span-3">
-              <span className="text-sm font-medium text-gray-700">Date Created</span>
-            </div>
-            <div className="col-span-2">
-              <span className="text-sm font-medium text-gray-700">Action</span>
-            </div>
-          </div>
-        </div>
+        <table className="min-w-full">
+          {/* Table Header */}
+          <thead className="bg-[#EBEBEB]">
+            <tr>
+              <th className="px-6 py-4 text-center">
+                <input
+                  type="checkbox"
+                  checked={allSelected}
+                  ref={(input) => {
+                    if (input)
+                      input.indeterminate = someSelected && !allSelected;
+                  }}
+                  onChange={(e) => handleSelectAll(e.target.checked)}
+                  className="w-4 h-4 text-[#273E8E] bg-gray-100 border-gray-300 rounded focus:ring-[#273E8E] focus:ring-2"
+                />
+              </th>
+              <th className="px-6 py-4 text-center">
+                <span className="text-sm font-medium text-black">
+                  Banner Image
+                </span>
+              </th>
+              <th className="px-6 py-4 text-center">
+                <span className="text-sm font-medium text-black">
+                  Date Created
+                </span>
+              </th>
+              <th className="px-6 py-4 text-center">
+                <span className="text-sm font-medium text-black">Action</span>
+              </th>
+            </tr>
+          </thead>
 
-        {/* Table Body */}
-        <div className="divide-y divide-gray-100">
-          {bannerList.map((banner) => (
-            <div key={banner.id} className="px-6 py-4 hover:bg-gray-50 transition-colors">
-              <div className="grid grid-cols-12 gap-4 items-center">
+          {/* Table Body */}
+          <tbody className="divide-y divide-gray-100">
+            {bannerList.map((banner) => (
+              <tr key={banner.id} className="bg-[#F8F8F8] transition-colors">
                 {/* Checkbox */}
-                <div className="col-span-1">
+                <td className="px-6 py-4 text-center">
                   <input
                     type="checkbox"
                     checked={banner.isSelected || false}
                     onChange={() => handleSelectBanner(banner.id)}
                     className="w-4 h-4 text-[#273E8E] bg-gray-100 border-gray-300 rounded focus:ring-[#273E8E] focus:ring-2"
                   />
-                </div>
+                </td>
 
                 {/* Banner Image */}
-                <div className="col-span-6">
-                  <div className="w-48 h-20 rounded-lg overflow-hidden border border-gray-200">
-                    <img 
+                <td className="px-6 py-4 text-center align-middle">
+                  <div className="flex justify-center items-center w-48 h-20 rounded-lg overflow-hidden border border-gray-200 mx-auto">
+                    <img
                       src={banner.image}
                       alt={`Banner ${banner.id}`}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        // Fallback if image fails to load
                         const target = e.target as HTMLImageElement;
-                        target.src = "/assets/images/banner.png"; // Fallback image
+                        target.src = "/assets/images/banner.png";
                       }}
                     />
                   </div>
-                </div>
+                </td>
 
                 {/* Date Created */}
-                <div className="col-span-3">
-                  <span className="text-sm text-gray-600">{banner.dateCreated}</span>
-                </div>
+                <td className="px-6 py-4 text-center">
+                  <span className="text-sm text-gray-600">
+                    {banner.dateCreated}
+                  </span>
+                </td>
 
                 {/* Actions */}
-                <div className="flex flex-row">
-                  <div>
-                     <button
-                    onClick={() => handleEdit(banner.id)}
-                    className="bg-[#273E8E] text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors"
-                  >
-                    Edit Banner
-                  </button>
+                <td className="px-6 py-4">
+                  <div className="flex flex-row space-x-2 justify-center items-center">
+                    <button
+                      onClick={() => handleEdit(banner.id)}
+                      className="bg-[#273E8E] text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors cursor-pointer"
+                    >
+                      Edit Banner
+                    </button>
+                    <button
+                      onClick={() => handleDelete(banner.id)}
+                      className="bg-red-500 text-white px-10 py-3 rounded-full text-sm font-medium hover:bg-red-600 transition-colors cursor-pointer"
+                    >
+                      Delete
+                    </button>
                   </div>
-                 
-                 <div> <button
-                    onClick={() => handleDelete(banner.id)}
-                    className="bg-red-500 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-red-600 transition-colors"
-                  >
-                    Delete
-                  </button></div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
         {/* Empty State */}
         {bannerList.length === 0 && (

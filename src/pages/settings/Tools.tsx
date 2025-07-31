@@ -9,15 +9,15 @@ const Tools = () => {
   return (
     <div className="w-full ">
       {/* Tool Categories */}
-      <div className="inline-flex bg-white rounded-full p-3 mb-8 border border-gray-200">
+      <div className="inline-flex bg-white rounded-full p-2 mb-8 border border-[#CDCDCD]">
         {toolCategories.map((category) => (
           <button
             key={category.id}
             onClick={() => setActiveCategory(category.id)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+            className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${
               activeCategory === category.id
                 ? 'bg-[#273E8E] text-white shadow-xs'
-                : 'text-gray-600 hover:text-gray-800'
+                : 'text-[#000000B2] hover:text-black'
             }`}
           >
             {category.name}
