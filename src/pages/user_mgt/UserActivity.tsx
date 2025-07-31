@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { users } from "../../constants/usermgt";
 import React, { useState } from "react";
 import Header from "../../component/Header";
@@ -13,6 +13,7 @@ const activities = [
 const UserActivity: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const user = users.find((u) => u.id === id);
   const [showEdit, setShowEdit] = useState(false);
   const [form, setForm] = useState({
@@ -60,27 +61,60 @@ const UserActivity: React.FC = () => {
 
         {/* Tabs */}
         <div className="flex gap-8 border-b border-gray-200 text-md mb-6">
-          <button className="pb-2 cursor-pointer text-black font-semibold relative">
+          <button
+            className={`pb-2 cursor-pointer relative ${
+              !location.pathname.includes("/loans") &&
+              !location.pathname.includes("/transactions") &&
+              !location.pathname.includes("/orders")
+                ? "text-black font-semibold"
+                : "text-[#00000080]"
+            }`}
+          >
             Activity
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#273E8E] rounded-full"></div>
+            {!location.pathname.includes("/loans") &&
+              !location.pathname.includes("/transactions") &&
+              !location.pathname.includes("/orders") && (
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-[#273E8E] rounded-full"></div>
+              )}
           </button>
           <button
-            className="pb-2 cursor-pointer text-[#00000080]"
+            className={`pb-2 cursor-pointer relative ${
+              location.pathname.includes("/loans")
+                ? "text-black font-semibold"
+                : "text-[#00000080]"
+            }`}
             onClick={() => navigate(`/user-activity/${user.id}/loans`)}
           >
             Loans
+            {location.pathname.includes("/loans") && (
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-[#273E8E] rounded-full"></div>
+            )}
           </button>
           <button
-            className="pb-2 cursor-pointer text-[#00000080]"
+            className={`pb-2 cursor-pointer relative ${
+              location.pathname.includes("/transactions")
+                ? "text-black font-semibold"
+                : "text-[#00000080]"
+            }`}
             onClick={() => navigate(`/user-activity/${user.id}/transactions`)}
           >
             Transactions
+            {location.pathname.includes("/transactions") && (
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-[#273E8E] rounded-full"></div>
+            )}
           </button>
           <button
-            className="pb-2 cursor-pointer text-[#00000080]"
+            className={`pb-2 cursor-pointer relative ${
+              location.pathname.includes("/orders")
+                ? "text-black font-semibold"
+                : "text-[#00000080]"
+            }`}
             onClick={() => navigate(`/user-activity/${user.id}/orders`)}
           >
             Orders
+            {location.pathname.includes("/orders") && (
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-[#273E8E] rounded-full"></div>
+            )}
           </button>
         </div>
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import images from '../../constants/images';
 
 interface NewNotificationModalProps {
   isOpen: boolean;
@@ -33,9 +34,9 @@ const NewNotificationModal = ({ isOpen, onClose, onSave }: NewNotificationModalP
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-xl font-bold"
+          className="absolute top-4 right-4 text-xl cursor-pointer"
         >
-          ×
+          <img src={images.cross} alt="" />
         </button>
 
         {/* Modal Header */}
@@ -72,7 +73,7 @@ const NewNotificationModal = ({ isOpen, onClose, onSave }: NewNotificationModalP
         {/* Save Button */}
         <button
           onClick={handleSave}
-          className="w-full bg-[#273E8E] text-white py-3 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors"
+          className="w-full bg-[#273E8E] text-white py-3 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors cursor-pointer"
         >
           Save
         </button>

@@ -1,13 +1,16 @@
-import { useState, useRef, useEffect } from 'react';
-import { productCategories, brands } from './product';
-import type { ProductCategory, Brand } from './product';
-import AddNewCategory from './AddNewCategory';
-import AddNewBrand from './AddNewBrand';
+import { useState, useRef, useEffect } from "react";
+import { productCategories, brands } from "./product";
+import type { ProductCategory, Brand } from "./product";
+import AddNewCategory from "./AddNewCategory";
+import AddNewBrand from "./AddNewBrand";
 
 const Product = () => {
-  const [categories, setCategories] = useState<ProductCategory[]>(productCategories);
+  const [categories, setCategories] =
+    useState<ProductCategory[]>(productCategories);
   const [brandList, setBrandList] = useState<Brand[]>(brands);
-  const [activeTab, setActiveTab] = useState<'categories' | 'brand'>('categories');
+  const [activeTab, setActiveTab] = useState<"categories" | "brand">(
+    "categories"
+  );
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
   const [isAddBrandModalOpen, setIsAddBrandModalOpen] = useState(false);
 
@@ -18,45 +21,49 @@ const Product = () => {
 
   // Category options with customizable PNG paths
   const categoryOptions = [
-    { 
-      value: "", 
-      label: "Categories", 
-      icon: null 
+    {
+      value: "",
+      label: "Categories",
+      icon: null,
     },
-    { 
-      value: "solar-panels", 
-      label: "Solar Panels", 
-      icon: "/assets/images/solarpanel.png"
+    {
+      value: "solar-panels",
+      label: "Solar Panels",
+      icon: "/assets/images/solarpanel.png",
     },
-    { 
-      value: "batteries", 
-      label: "Batteries", 
-      icon: "/assets/images/batteries.png"
+    {
+      value: "batteries",
+      label: "Batteries",
+      icon: "/assets/images/batteries.png",
     },
-    { 
-      value: "inverters", 
-      label: "Inverters", 
-      icon: "/assets/images/inverters.png"
+    {
+      value: "inverters",
+      label: "Inverters",
+      icon: "/assets/images/inverters.png",
     },
-    { 
-      value: "mttp-chargers", 
-      label: "MTTP Chargers", 
-      icon: "/assets/images/mttpcharger.png"
+    {
+      value: "mttp-chargers",
+      label: "MTTP Chargers",
+      icon: "/assets/images/mttpcharger.png",
     },
-    { 
-      value: "led-bulbs", 
-      label: "LED Bulbs", 
-      icon: "/assets/images/bulb.png"
+    {
+      value: "led-bulbs",
+      label: "LED Bulbs",
+      icon: "/assets/images/bulb.png",
     },
-    { 
-      value: "solar-fans", 
-      label: "Solar Fans", 
-      icon: "/assets/images/solarfans.png"
-    }
+    {
+      value: "solar-fans",
+      label: "Solar Fans",
+      icon: "/assets/images/solarfans.png",
+    },
   ];
 
   // Custom dropdown handlers
-  const handleCategorySelect = (category: { value: string; label: string; icon: string | null }) => {
+  const handleCategorySelect = (category: {
+    value: string;
+    label: string;
+    icon: string | null;
+  }) => {
     setSelectedCategoryFilter(category.value);
     setIsCategoryDropdownOpen(false);
   };
@@ -66,26 +73,33 @@ const Product = () => {
   };
 
   const getSelectedCategoryOption = () => {
-    return categoryOptions.find(option => option.value === selectedCategoryFilter) || categoryOptions[0];
+    return (
+      categoryOptions.find(
+        (option) => option.value === selectedCategoryFilter
+      ) || categoryOptions[0]
+    );
   };
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target as Node)) {
+      if (
+        categoryDropdownRef.current &&
+        !categoryDropdownRef.current.contains(event.target as Node)
+      ) {
         setIsCategoryDropdownOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   const handleSelectCategory = (id: string) => {
-    setCategories(prev =>
-      prev.map(category =>
+    setCategories((prev) =>
+      prev.map((category) =>
         category.id === id
           ? { ...category, isSelected: !category.isSelected }
           : category
@@ -94,91 +108,103 @@ const Product = () => {
   };
 
   const handleSelectAll = (checked: boolean) => {
-    setCategories(prev =>
-      prev.map(category => ({ ...category, isSelected: checked }))
+    setCategories((prev) =>
+      prev.map((category) => ({ ...category, isSelected: checked }))
     );
   };
 
   const handleEdit = (id: string) => {
-    console.log('Edit category:', id);
+    console.log("Edit category:", id);
     // Add edit functionality here
   };
 
   const handleDelete = (id: string) => {
-    setCategories(prev => prev.filter(category => category.id !== id));
+    setCategories((prev) => prev.filter((category) => category.id !== id));
   };
 
   const handleSelectBrand = (id: string) => {
-    setBrandList(prev =>
-      prev.map(brand =>
-        brand.id === id
-          ? { ...brand, isSelected: !brand.isSelected }
-          : brand
+    setBrandList((prev) =>
+      prev.map((brand) =>
+        brand.id === id ? { ...brand, isSelected: !brand.isSelected } : brand
       )
     );
   };
 
   const handleSelectAllBrands = (checked: boolean) => {
-    setBrandList(prev =>
-      prev.map(brand => ({ ...brand, isSelected: checked }))
+    setBrandList((prev) =>
+      prev.map((brand) => ({ ...brand, isSelected: checked }))
     );
   };
 
   const handleEditBrand = (id: string) => {
-    console.log('Edit brand:', id);
+    console.log("Edit brand:", id);
     // Add edit functionality here
   };
 
   const handleDeleteBrand = (id: string) => {
-    setBrandList(prev => prev.filter(brand => brand.id !== id));
+    setBrandList((prev) => prev.filter((brand) => brand.id !== id));
   };
 
-  const handleAddNewCategory = (categoryName: string, image: File | null, status: string) => {
+  const handleAddNewCategory = (
+    categoryName: string,
+    image: File | null,
+    status: string
+  ) => {
     if (image) {
       const imageUrl = URL.createObjectURL(image);
       const newCategory: ProductCategory = {
         id: (categories.length + 1).toString(),
         categoryName,
         image: imageUrl,
-        dateCreated: new Date().toLocaleDateString('en-GB', {
-          day: '2-digit',
-          month: '2-digit',
-          year: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true
-        }).replace(/\//g, '-').replace(',', '/'),
-        status: status as 'Active' | 'Pending',
-        isSelected: false
+        dateCreated: new Date()
+          .toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          })
+          .replace(/\//g, "-")
+          .replace(",", "/"),
+        status: status as "Active" | "Pending",
+        isSelected: false,
       };
-      setCategories(prev => [...prev, newCategory]);
+      setCategories((prev) => [...prev, newCategory]);
     }
   };
 
-  const handleAddNewBrand = (categoryName: string, brandName: string, status: string) => {
+  const handleAddNewBrand = (
+    categoryName: string,
+    brandName: string,
+    status: string
+  ) => {
     const newBrand: Brand = {
       id: (brandList.length + 1).toString(),
       brandName,
       category: categoryName,
-      dateCreated: new Date().toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-      }).replace(/\//g, '-').replace(',', '/'),
-      status: status as 'Active' | 'Pending',
-      isSelected: false
+      dateCreated: new Date()
+        .toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })
+        .replace(/\//g, "-")
+        .replace(",", "/"),
+      status: status as "Active" | "Pending",
+      isSelected: false,
     };
-    setBrandList(prev => [...prev, newBrand]);
+    setBrandList((prev) => [...prev, newBrand]);
   };
 
-  const allSelected = categories.every(category => category.isSelected);
-  const someSelected = categories.some(category => category.isSelected);
-  
-  const allBrandsSelected = brandList.every(brand => brand.isSelected);
-  const someBrandsSelected = brandList.some(brand => brand.isSelected);
+  const allSelected = categories.every((category) => category.isSelected);
+  const someSelected = categories.some((category) => category.isSelected);
+
+  const allBrandsSelected = brandList.every((brand) => brand.isSelected);
+  const someBrandsSelected = brandList.some((brand) => brand.isSelected);
 
   return (
     <div className="w-full ">
@@ -186,23 +212,23 @@ const Product = () => {
       <div className="mb-6 flex justify-between items-center">
         {/* Left side - Tab Navigation / Filters */}
         <div className="flex items-center space-x-4">
-          <div className="bg-[#FFFFFF] rounded-full p-2 flex border border-gray-200">
+          <div className="bg-[#FFFFFF] rounded-full p-2 flex border border-gray-200 cursor-pointer">
             <button
-              onClick={() => setActiveTab('categories')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeTab === 'categories'
-                  ? 'bg-[#273E8E] text-white shadow-sm'
-                  : 'text-gray-600 hover:text-gray-800'
+              onClick={() => setActiveTab("categories")}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors cursor-pointer ${
+                activeTab === "categories"
+                  ? "bg-[#273E8E] text-white shadow-sm"
+                  : "text-gray-600 hover:text-gray-800"
               }`}
             >
               Categories
             </button>
             <button
-              onClick={() => setActiveTab('brand')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeTab === 'brand'
-                  ? 'bg-[#273E8E] text-white shadow-sm'
-                  : 'text-gray-600 hover:text-gray-800'
+              onClick={() => setActiveTab("brand")}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors cursor-pointer ${
+                activeTab === "brand"
+                  ? "bg-[#273E8E] text-white shadow-sm"
+                  : "text-gray-600 hover:text-gray-800"
               }`}
             >
               Brand
@@ -211,139 +237,166 @@ const Product = () => {
 
           {/* Categories Dropdown Filter */}
           <div className="relative" ref={categoryDropdownRef}>
-            <button 
+            <button
               onClick={toggleCategoryDropdown}
               className="bg-white border border-gray-300 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 flex items-center justify-between min-w-[140px] focus:ring-2 focus:ring-[#273E8E] focus:border-[#273E8E]"
             >
               <div className="flex items-center">
                 {getSelectedCategoryOption().icon && (
-                  <img 
-                    src={getSelectedCategoryOption().icon || ""} 
+                  <img
+                    src={getSelectedCategoryOption().icon || ""}
                     alt={getSelectedCategoryOption().label}
                     className="w-4 h-4 mr-2 object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
+                      target.style.display = "none";
                     }}
                   />
                 )}
                 <span>{getSelectedCategoryOption().label}</span>
               </div>
-              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              <svg
+                className="w-4 h-4 text-gray-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </button>
-            
+
             {/* Custom Dropdown Menu */}
             {isCategoryDropdownOpen && (
-              <div className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-50 overflow-y-auto" style={{width: '397px', height: '400px'}}>
-                {categoryOptions.map((option, index) => (
-                  <button
-                    key={option.value}
-                    onClick={() => handleCategorySelect(option)}
-                    className={`w-full px-4 py-3 text-left text-sm hover:bg-gray-50 flex items-center transition-colors ${
-                      index === 0 ? 'rounded-t-lg' : ''
-                    } ${
-                      index === categoryOptions.length - 1 ? 'rounded-b-lg' : ''
-                    } ${
-                      selectedCategoryFilter === option.value ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
-                    }`}
-                  >
-                    {option.icon && (
-                      <div className="w-8 h-8 mr-3 flex items-center justify-center bg-gray-100 rounded-full">
-                        <img 
-                          src={option.icon || ""} 
-                          alt={option.label}
-                          className="w-5 h-5 object-contain"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                          }}
-                        />
-                      </div>
-                    )}
-                    <span className="font-medium">{option.label}</span>
-                  </button>
-                ))}
+              <div
+                className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-y-auto"
+                style={{ width: "397px", height: "400px" }}
+              >
+                <div className="p-3">
+                  {categoryOptions.slice(1).map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={() => handleCategorySelect(option)}
+                      className={`w-full px-4 py-3 text-left text-sm hover:bg-gray-50 flex items-center transition-colors rounded-lg mb-2 last:mb-0 ${
+                        selectedCategoryFilter === option.value
+                          ? "bg-blue-50 border border-blue-200"
+                          : "bg-gray-50 border border-transparent"
+                      }`}
+                    >
+                      {option.icon && (
+                        <div className="w-14 h-14 mr-4 flex items-center justify-center bg-[#BEBEF1] rounded-full ">
+                          <img
+                            src={option.icon || ""}
+                            alt={option.label}
+                            className="w-12 h-12 object-contain"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = "none";
+                            }}
+                          />
+                        </div>
+                      )}
+                      <span className="font-medium text-gray-800">
+                        {option.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>
         </div>
 
         {/* Add New Category Button */}
-        <button 
+        <button
           onClick={() => {
-            if (activeTab === 'categories') {
+            if (activeTab === "categories") {
               setIsAddCategoryModalOpen(true);
             } else {
               setIsAddBrandModalOpen(true);
             }
           }}
-          className="bg-[#273E8E] text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors"
+          className="bg-[#273E8E] text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors cursor-pointer"
         >
-          {activeTab === 'categories' ? 'Add New Category' : 'Add New Brand'}
+          {activeTab === "categories" ? "Add New Category" : "Add New Brand"}
         </button>
       </div>
 
       {/* Categories Table */}
-      {activeTab === 'categories' && (
+      {activeTab === "categories" && (
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          {/* Table Header */}
-          <div className="bg-[#EBEBEB] px-6 py-4 border-b border-gray-200">
-            <div className="grid grid-cols-12 gap-4 items-center">
-              <div className="col-span-1">
-                <input
-                  type="checkbox"
-                  checked={allSelected}
-                  ref={input => {
-                    if (input) input.indeterminate = someSelected && !allSelected;
-                  }}
-                  onChange={(e) => handleSelectAll(e.target.checked)}
-                  className="w-4 h-4 text-[#273E8E] bg-gray-100 border-gray-300 rounded focus:ring-[#273E8E] focus:ring-2"
-                />
-              </div>
-              <div className="col-span-3">
-                <span className="text-sm font-medium text-gray-700">Category Name</span>
-              </div>
-              <div className="col-span-2">
-                <span className="text-sm font-medium text-gray-700">Image</span>
-              </div>
-              <div className="col-span-3">
-                <span className="text-sm font-medium text-gray-700">Date Created</span>
-              </div>
-              <div className="col-span-1">
-                <span className="text-sm font-medium text-gray-700">Status</span>
-              </div>
-              <div className="col-span-2">
-                <span className="text-sm font-medium text-gray-700">Action</span>
-              </div>
-            </div>
-          </div>
+          <table className="min-w-full">
+            {/* Table Header */}
+            <thead className="bg-[#EBEBEB]">
+              <tr>
+                <th className="px-6 py-4 text-center">
+                  <input
+                    type="checkbox"
+                    checked={allSelected}
+                    ref={(input) => {
+                      if (input)
+                        input.indeterminate = someSelected && !allSelected;
+                    }}
+                    onChange={(e) => handleSelectAll(e.target.checked)}
+                    className="w-4 h-4 text-[#273E8E] bg-gray-100 border-gray-300 rounded focus:ring-[#273E8E] focus:ring-2"
+                  />
+                </th>
+                <th className="px-6 py-4 text-center">
+                  <span className="text-sm font-medium text-black">
+                    Category Name
+                  </span>
+                </th>
+                <th className="px-6 py-4 text-center">
+                  <span className="text-sm font-medium text-black">Image</span>
+                </th>
+                <th className="px-6 py-4 text-center">
+                  <span className="text-sm font-medium text-black">
+                    Date Created
+                  </span>
+                </th>
+                <th className="px-6 py-4 text-center">
+                  <span className="text-sm font-medium text-black">Status</span>
+                </th>
+                <th className="px-6 py-4 text-center">
+                  <span className="text-sm font-medium text-black">Action</span>
+                </th>
+              </tr>
+            </thead>
 
-          {/* Table Body */}
-          <div className="divide-y divide-gray-100">
-            {categories.map((category) => (
-              <div key={category.id} className="px-6 py-4 hover:bg-gray-50 transition-colors">
-                <div className="grid grid-cols-12 gap-4 items-center">
+            {/* Table Body */}
+            <tbody className="divide-y divide-gray-100">
+              {categories.map((category, index) => (
+                <tr
+                  key={category.id}
+                  className={`${
+                    index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
+                  } transition-colors border-b border-gray-100 last:border-b-0 px-6 py-4 `}
+                >
                   {/* Checkbox */}
-                  <div className="col-span-1">
+                  <td className="px-6 py-4 text-center">
                     <input
                       type="checkbox"
                       checked={category.isSelected || false}
                       onChange={() => handleSelectCategory(category.id)}
                       className="w-4 h-4 text-[#273E8E] bg-gray-100 border-gray-300 rounded focus:ring-[#273E8E] focus:ring-2"
                     />
-                  </div>
+                  </td>
 
                   {/* Category Name */}
-                  <div className="col-span-3">
-                    <span className="text-sm font-medium text-gray-900">{category.categoryName}</span>
-                  </div>
+                  <td className="px-6 py-4 text-center">
+                    <span className="text-sm font-medium text-gray-900">
+                      {category.categoryName}
+                    </span>
+                  </td>
 
                   {/* Image */}
-                  <div className="col-span-2">
-                    <div className="w-12 h-12 rounded-lg overflow-hidden border border-gray-200">
-                      <img 
+                  <td className="px-6 py-4 flex justify-center items-center">
+                    <div className="w-12 h-12  overflow-hidden ">
+                      <img
                         src={category.image}
                         alt={`${category.categoryName} category`}
                         className="w-full h-full object-cover"
@@ -354,43 +407,49 @@ const Product = () => {
                         }}
                       />
                     </div>
-                  </div>
+                  </td>
 
                   {/* Date Created */}
-                  <div className="col-span-3">
-                    <span className="text-sm text-gray-600">{category.dateCreated}</span>
-                  </div>
+                  <td className="px-6 py-4 text-center">
+                    <span className="text-sm text-gray-600">
+                      {category.dateCreated}
+                    </span>
+                  </td>
 
                   {/* Status */}
-                  <div className="col-span-1">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      category.status === 'Active'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-yellow-100 text-yellow-800'
-                    }`}>
+                  <td className="px-6 py-4 text-center">
+                    <span
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        category.status === "Active"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-yellow-100 text-yellow-800"
+                      }`}
+                    >
                       {category.status}
                     </span>
-                  </div>
+                  </td>
 
                   {/* Actions */}
-                  <div className="col-span-2 flex space-x-2">
-                    <button
-                      onClick={() => handleEdit(category.id)}
-                      className="bg-[#273E8E] text-white px-3 py-2 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors"
-                    >
-                      Edit Category
-                    </button>
-                    <button
-                      onClick={() => handleDelete(category.id)}
-                      className="bg-red-500 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-red-600 transition-colors"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                  <td className="px-6 py-4 text-center">
+                    <div className="flex items-center justify-center space-x-2">
+                      <button
+                        onClick={() => handleEdit(category.id)}
+                        className="bg-[#273E8E] text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors cursor-pointer"
+                      >
+                        Edit Category
+                      </button>
+                      <button
+                        onClick={() => handleDelete(category.id)}
+                        className="bg-[#FF0000] text-white px-10 py-3 rounded-full text-sm font-medium hover:bg-red-600 transition-colors cursor-pointer"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
           {/* Empty State */}
           {categories.length === 0 && (
@@ -402,100 +461,123 @@ const Product = () => {
       )}
 
       {/* Brand Tab Content */}
-      {activeTab === 'brand' && (
+      {activeTab === "brand" && (
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          {/* Table Header */}
-          <div className="bg-[#EBEBEB] px-6 py-4 border-b border-gray-200">
-            <div className="grid grid-cols-12 gap-4 items-center">
-              <div className="col-span-1">
-                <input
-                  type="checkbox"
-                  checked={allBrandsSelected}
-                  ref={input => {
-                    if (input) input.indeterminate = someBrandsSelected && !allBrandsSelected;
-                  }}
-                  onChange={(e) => handleSelectAllBrands(e.target.checked)}
-                  className="w-4 h-4 text-[#273E8E] bg-gray-100 border-gray-300 rounded focus:ring-[#273E8E] focus:ring-2"
-                />
-              </div>
-              <div className="col-span-3">
-                <span className="text-sm font-medium text-gray-700">Brand Name</span>
-              </div>
-              <div className="col-span-2">
-                <span className="text-sm font-medium text-gray-700">Category</span>
-              </div>
-              <div className="col-span-3">
-                <span className="text-sm font-medium text-gray-700">Date Created</span>
-              </div>
-              <div className="col-span-1">
-                <span className="text-sm font-medium text-gray-700">Status</span>
-              </div>
-              <div className="col-span-2">
-                <span className="text-sm font-medium text-gray-700">Action</span>
-              </div>
-            </div>
-          </div>
+          <table className="min-w-full">
+            {/* Table Header */}
+            <thead className="bg-[#EBEBEB]">
+              <tr>
+                <th className="px-6 py-4 text-center">
+                  <input
+                    type="checkbox"
+                    checked={allBrandsSelected}
+                    ref={(input) => {
+                      if (input)
+                        input.indeterminate =
+                          someBrandsSelected && !allBrandsSelected;
+                    }}
+                    onChange={(e) => handleSelectAllBrands(e.target.checked)}
+                    className="w-4 h-4 text-[#273E8E] bg-gray-100 border-gray-300 rounded focus:ring-[#273E8E] focus:ring-2"
+                  />
+                </th>
+                <th className="px-6 py-4 text-center">
+                  <span className="text-sm font-medium text-black">
+                    Brand Name
+                  </span>
+                </th>
+                <th className="px-6 py-4 text-center">
+                  <span className="text-sm font-medium text-black">
+                    Category
+                  </span>
+                </th>
+                <th className="px-6 py-4 text-center">
+                  <span className="text-sm font-medium text-black">
+                    Date Created
+                  </span>
+                </th>
+                <th className="px-6 py-4 text-center">
+                  <span className="text-sm font-medium text-black">Status</span>
+                </th>
+                <th className="px-6 py-4 text-center">
+                  <span className="text-sm font-medium text-black">Action</span>
+                </th>
+              </tr>
+            </thead>
 
-          {/* Table Body */}
-          <div className="divide-y divide-gray-100">
-            {brandList.map((brand) => (
-              <div key={brand.id} className="px-6 py-4 hover:bg-gray-50 transition-colors">
-                <div className="grid grid-cols-12 gap-4 items-center">
+            {/* Table Body */}
+            <tbody className="divide-y divide-gray-100">
+              {brandList.map((brand, index) => (
+                <tr
+                  key={brand.id}
+                  className={`${
+                    index % 2 === 0 ? "bg-[#F8F8F8]" : "bg-white"
+                  } transition-colors border-b border-gray-100 last:border-b-0 px-6 py-4 `}
+                >
                   {/* Checkbox */}
-                  <div className="col-span-1">
+                  <td className="px-6 py-4 text-center">
                     <input
                       type="checkbox"
                       checked={brand.isSelected || false}
                       onChange={() => handleSelectBrand(brand.id)}
                       className="w-4 h-4 text-[#273E8E] bg-gray-100 border-gray-300 rounded focus:ring-[#273E8E] focus:ring-2"
                     />
-                  </div>
+                  </td>
 
                   {/* Brand Name */}
-                  <div className="col-span-3">
-                    <span className="text-sm font-medium text-gray-900">{brand.brandName}</span>
-                  </div>
+                  <td className="px-6 py-4 text-center">
+                    <span className="text-sm font-medium text-gray-900">
+                      {brand.brandName}
+                    </span>
+                  </td>
 
                   {/* Category */}
-                  <div className="col-span-2">
-                    <span className="text-sm text-gray-600">{brand.category}</span>
-                  </div>
+                  <td className="px-6 py-4 text-center">
+                    <span className="text-sm text-gray-600">
+                      {brand.category}
+                    </span>
+                  </td>
 
                   {/* Date Created */}
-                  <div className="col-span-3">
-                    <span className="text-sm text-gray-600">{brand.dateCreated}</span>
-                  </div>
+                  <td className="px-6 py-4 text-center">
+                    <span className="text-sm text-gray-600">
+                      {brand.dateCreated}
+                    </span>
+                  </td>
 
                   {/* Status */}
-                  <div className="col-span-1">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      brand.status === 'Active'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-yellow-100 text-yellow-800'
-                    }`}>
+                  <td className="px-6 py-4 text-center">
+                    <span
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        brand.status === "Active"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-yellow-100 text-yellow-800"
+                      }`}
+                    >
                       {brand.status}
                     </span>
-                  </div>
+                  </td>
 
                   {/* Actions */}
-                  <div className="col-span-2 flex space-x-2">
-                    <button
-                      onClick={() => handleEditBrand(brand.id)}
-                      className="bg-[#273E8E] text-white px-3 py-2 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors"
-                    >
-                      Edit Brand
-                    </button>
-                    <button
-                      onClick={() => handleDeleteBrand(brand.id)}
-                      className="bg-red-500 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-red-600 transition-colors"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                  <td className="px-6 py-4 text-center">
+                    <div className="flex space-x-2 justify-center items-center">
+                      <button
+                        onClick={() => handleEditBrand(brand.id)}
+                        className="bg-[#273E8E] text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-[#1f2f7a] transition-colors cursor-pointer"
+                      >
+                        Edit Brand
+                      </button>
+                      <button
+                        onClick={() => handleDeleteBrand(brand.id)}
+                        className="bg-[#FF0000] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-red-600 transition-colors cursor-pointer"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
           {/* Empty State */}
           {brandList.length === 0 && (
@@ -505,14 +587,14 @@ const Product = () => {
           )}
         </div>
       )}
-      
+
       {/* Add New Category Modal */}
       <AddNewCategory
         isOpen={isAddCategoryModalOpen}
         onClose={() => setIsAddCategoryModalOpen(false)}
         onSave={handleAddNewCategory}
       />
-      
+
       {/* Add New Brand Modal */}
       <AddNewBrand
         isOpen={isAddBrandModalOpen}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import images from '../../constants/images';
 
 interface EditProfileProps {
   isOpen: boolean;
@@ -54,16 +55,14 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
           <h2 className="text-xl font-semibold text-gray-900">Edit Profile</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer transition-colors"
           >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
+            <img src={images.cross} alt="" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto" style={{ height: 'calc(100% - 80px)' }}>
+        <div className="p-6 overflow-y-auto" style={{ height: 'calc(100% - 120px)' }}>
           {/* Profile Image */}
           <div className="flex justify-center mb-6">
             <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center">
@@ -87,7 +86,7 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
                 value={formData.firstName}
                 onChange={handleInputChange}
                 placeholder="Enter your first name"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                className="w-full px-4 py-3 border border-[#CDCDCD] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               />
             </div>
 
@@ -102,7 +101,7 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
                 value={formData.surname}
                 onChange={handleInputChange}
                 placeholder="Enter your surname"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                className="w-full px-4 py-3 border border-[#CDCDCD] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               />
             </div>
 
@@ -117,7 +116,7 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="Enter your email address"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                className="w-full px-4 py-3 border border-[#CDCDCD] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               />
             </div>
 
@@ -132,7 +131,7 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
                 value={formData.bvn}
                 onChange={handleInputChange}
                 placeholder="BVN Number"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                className="w-full px-4 py-3 border border-[#CDCDCD] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               />
             </div>
 
@@ -147,13 +146,13 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
                 value={formData.password}
                 onChange={handleInputChange}
                 placeholder="Enter Password"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                className="w-full px-4 py-3 border border-[#CDCDCD] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               />
             </div>
 
             {/* Role */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2 cursor-pointer">
                 Role
               </label>
               <div className="relative">
@@ -161,7 +160,7 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
                   name="role"
                   value={formData.role}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none appearance-none bg-white"
+                  className="w-full px-4 py-3 border border-[#CDCDCD] cursor-pointer rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none appearance-none bg-white"
                 >
                   <option value="Admin">Admin</option>
                   <option value="Super Admin">Super Admin</option>
@@ -179,7 +178,7 @@ const EditProfile = ({ isOpen, onClose, adminData }: EditProfileProps) => {
             <div className="mt-8">
               <button
                 onClick={handleSave}
-                className="w-full bg-[#273E8E] text-white py-3 rounded-full font-medium hover:bg-[#1f2f7a] transition-colors"
+                className="w-full bg-[#273E8E] text-white py-3 rounded-full font-medium hover:bg-[#1f2f7a] transition-colors cursor-pointer"
               >
                 Save
               </button>

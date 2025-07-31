@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import images from '../../constants/images';
 
 interface AddNewCategoryProps {
   isOpen: boolean;
@@ -84,11 +85,9 @@ const AddNewCategory = ({ isOpen, onClose, onSave }: AddNewCategoryProps) => {
           <h2 className="text-lg font-semibold text-gray-900">Add Category</h2>
           <button
             onClick={handleClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer transition-colors"
           >
-            <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <img src={images.cross} alt="" />
           </button>
         </div>
 

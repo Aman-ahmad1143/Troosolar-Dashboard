@@ -1,20 +1,24 @@
-import { useState } from 'react';
-import { roomTypes } from './inverterloadcal';
-import type { ApplianceItem } from './inverterloadcal';
+import { useState } from "react";
+import { roomTypes } from "./inverterloadcal";
+import type { ApplianceItem } from "./inverterloadcal";
+import images from "../../constants/images";
 
 const InverterLoadCal = () => {
-  const [selectedRoom, setSelectedRoom] = useState<string>('1bedroom');
+  const [selectedRoom, setSelectedRoom] = useState<string>("1bedroom");
   const [currentAppliances, setCurrentAppliances] = useState<ApplianceItem[]>(
-    roomTypes.find(room => room.id === '1bedroom')?.appliances || []
+    roomTypes.find((room) => room.id === "1bedroom")?.appliances || []
   );
 
   // Calculate total output for inverter
-  const totalOutput = currentAppliances.reduce((total, appliance) => total + appliance.totalWattage, 0);
+  const totalOutput = currentAppliances.reduce(
+    (total, appliance) => total + appliance.totalWattage,
+    0
+  );
 
   // Handle room selection
   const handleRoomSelect = (roomId: string) => {
     setSelectedRoom(roomId);
-    const room = roomTypes.find(r => r.id === roomId);
+    const room = roomTypes.find((r) => r.id === roomId);
     if (room) {
       setCurrentAppliances([...room.appliances]);
     }
@@ -22,14 +26,14 @@ const InverterLoadCal = () => {
 
   // Handle quantity change
   const handleQuantityChange = (applianceId: string, change: number) => {
-    setCurrentAppliances(prev => 
-      prev.map(appliance => {
+    setCurrentAppliances((prev) =>
+      prev.map((appliance) => {
         if (appliance.id === applianceId) {
           const newQuantity = Math.max(0, appliance.quantity + change);
           return {
             ...appliance,
             quantity: newQuantity,
-            totalWattage: appliance.wattage * newQuantity
+            totalWattage: appliance.wattage * newQuantity,
           };
         }
         return appliance;
@@ -39,13 +43,13 @@ const InverterLoadCal = () => {
 
   // Handle individual wattage change
   const handleWattageChange = (applianceId: string, newWattage: number) => {
-    setCurrentAppliances(prev => 
-      prev.map(appliance => {
+    setCurrentAppliances((prev) =>
+      prev.map((appliance) => {
         if (appliance.id === applianceId) {
           return {
             ...appliance,
             wattage: newWattage,
-            totalWattage: newWattage * appliance.quantity
+            totalWattage: newWattage * appliance.quantity,
           };
         }
         return appliance;
@@ -55,8 +59,10 @@ const InverterLoadCal = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-8">Inverter Load Calculator</h2>
-      
+      <h2 className="text-2xl font-bold text-gray-800 mb-8">
+        Inverter Load Calculator
+      </h2>
+
       <div className="flex gap-8">
         {/* Room Selection Sidebar */}
         <div className="w-32 space-y-4">
@@ -64,15 +70,18 @@ const InverterLoadCal = () => {
             <button
               key={room.id}
               onClick={() => handleRoomSelect(room.id)}
-              className={`w-full p-4 rounded-lg border-2 transition-all ${
+              className={`w-full p-5 rounded-2xl bg-white cursor-pointer transition-all ${
                 selectedRoom === room.id
-                  ? 'border-[#273E8E] bg-blue-50'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? "border border-[#273E8E]"
+                  : "border-0"
               }`}
+              style={{
+                boxShadow: "0 2px 4px rgba(109, 108, 108, 0.25)",
+              }}
             >
               <div className="w-12 h-12 mx-auto mb-2 flex items-center justify-center">
-                <img 
-                  src={room.icon} 
+                <img
+                  src={room.icon}
                   alt={room.name}
                   className="w-full h-full object-contain"
                 />
@@ -86,14 +95,14 @@ const InverterLoadCal = () => {
 
         {/* Appliances List */}
         <div className="flex-1">
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-2xl border border-[#00000080] overflow-hidden">
             {/* Appliances Rows */}
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-[#CDCDCD]">
               {currentAppliances.map((appliance) => (
                 <div key={appliance.id} className="px-6 py-3">
                   <div className="grid grid-cols-4 gap-4 items-center">
                     {/* Appliance Name */}
-                    <div className="text-gray-800 text-sm font-medium">
+                    <div className="text-black text-md font-medium">
                       {appliance.name}
                     </div>
 
@@ -102,34 +111,43 @@ const InverterLoadCal = () => {
                       <input
                         type="number"
                         value={appliance.wattage}
-                        onChange={(e) => handleWattageChange(appliance.id, parseInt(e.target.value) || 0)}
+                        onChange={(e) =>
+                          handleWattageChange(
+                            appliance.id,
+                            parseInt(e.target.value) || 0
+                          )
+                        }
                         className="w-16 px-2 py-1 text-center border border-gray-300 rounded text-sm"
                       />
-                      <span className="text-xs text-gray-500 ml-1">w</span>
+                      <span className="text-[#000000] text-md font-semibold ml-1">
+                        w
+                      </span>
                     </div>
 
                     {/* Quantity Controls */}
                     <div className="flex items-center justify-center space-x-2">
                       <button
                         onClick={() => handleQuantityChange(appliance.id, -1)}
-                        className="w-8 h-8 flex items-center justify-center bg-[#273E8E] text-white rounded font-bold hover:bg-[#1f2f7a] transition-colors"
+                        className="w-10 h-10 flex items-center justify-center transition-colors cursor-pointer"
                       >
-                        -
+                        <img src={images.minus} alt="" />
                       </button>
                       <span className="w-8 text-center font-medium text-gray-800">
                         {appliance.quantity}
                       </span>
                       <button
                         onClick={() => handleQuantityChange(appliance.id, 1)}
-                        className="w-8 h-8 flex items-center justify-center bg-[#273E8E] text-white rounded font-bold hover:bg-[#1f2f7a] transition-colors"
+                        className="w-10 h-10 flex items-center justify-center transition-colors cursor-pointer"
                       >
-                        +
+                        <img src={images.plus} alt="" />
                       </button>
                     </div>
 
                     {/* Total Wattage */}
                     <div className="text-center">
-                      <span className="text-gray-600 text-sm">{appliance.totalWattage}w</span>
+                      <span className="text-[#000000] text-md font-semibold">
+                        {appliance.totalWattage}w
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -139,12 +157,14 @@ const InverterLoadCal = () => {
         </div>
 
         {/* Total Output Card */}
-        <div className="w-90">
-          <div className="bg-[#273e8e] text-white rounded-2xl px-2 py-6 flex gap-4 shadow-lg">
-            <h2 className="text-xl font-semibold w-[40%] text-center">Total Output</h2>
-            <div className="bg-white h-[60px] w-[60%] rounded-xl px-1 flex justify-center items-center gap-2 text-[#273e8e] shadow-inner">
-              <span className="text-4xl font-bold">{totalOutput.toLocaleString()}</span>
-              <span className="text-lg">Watts</span>
+        <div className="w-96">
+          <div className="bg-[#273E8E] text-white rounded-2xl px-6 py-4 flex items-center gap-4 shadow-lg">
+            <h2 className="text-xl font-semibold">Total Output</h2>
+            <div className="bg-white rounded-xl px-12 py-3 flex items-center gap-2 text-[#273E8E] shadow-inner ml-auto">
+              <span className="text-2xl font-bold">
+                {totalOutput.toLocaleString()}
+              </span>
+              <span className="text-sm font-medium">Watts</span>
             </div>
           </div>
         </div>
